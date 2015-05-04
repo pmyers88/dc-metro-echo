@@ -11,8 +11,15 @@ app.get('/', function(req, res) {
 
 app.post('/echo_request/parse', function(req, res) {
   var respJSON = null;
-  if (req.body.request.type === 'LaunchRequest') {
+  var reqType = req.body.request.type;
+  if (reqType === 'LaunchRequest') {
     respJSON = buildResponse('DC Metro Echo', 'Metro App', 'Welcome to the DC Metro App! How can I help you?', false);
+  } else if (reqType === 'IntentRequest') {
+    console.log(JSON.stringify(req.body.request.intent));
+    respJSON = req.body.request.intent;
+  } else if (reqType === 'SessionEndedRequest') {
+  } else {
+    respJSON = buildResponse('Invalid Request Type', 'Invalid Request Type', 'Something went wrong, your request was invalid', true);
   }
   res.json(respJSON);
 });
