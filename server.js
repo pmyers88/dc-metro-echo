@@ -39,22 +39,26 @@ app.post('/echo_request/parse', function(req, res) {
         if (intent.name === 'GetMetroTimes') {
           var stationName = intent.slots.station.value;
           console.log('Station Name: ' + stationName);
-          var stationCode = stationNameHash[stationName].Code;
-          http.get(_.assign(wmataOptions, { path: '/StationPrediction.svc/json/GetPrediction/' + stationCode + '?' + apiKey }), function(predictionResp) {
-            var predictionBody = '';
-            predictionResp.on('data', function(chunk) {
-              predictionBody += chunk;
+          if (_.has(stationNameHash, stationName)) {
+            var stationCode = stationNameHash[stationName].Code;
+            http.get(_.assign(wmataOptions, { path: '/StationPrediction.svc/json/GetPrediction/' + stationCode + '?' + apiKey }), function(predictionResp) {
+              var predictionBody = '';
+              predictionResp.on('data', function(chunk) {
+                predictionBody += chunk;
+              });
+              predictionResp.on('end', function() {
+                var trains = JSON.parse(predictionBody).Trains;
+                var trainArrivals = _.reduce(trains, function(sentence, train) {
+                  return sentence + 'The next train to ' + train.DestinationName + ' leaves in ' + train.Min + ' minutes.'
+                }, '');
+                res.json(buildResponse('Train Arrivals', 'Here are the train arrivals', trainArrivals, true));
+              })
+            }).on('error', function(e) {
+              console.log('Error getting train predictions: ' + e.message);
             });
-            predictionResp.on('end', function() {
-              var trains = JSON.parse(predictionBody).Trains;
-              var trainArrivals = _.reduce(trains, function(sentence, train) {
-                return sentence + 'The next train to ' + train.DestinationName + ' leaves in ' + train.Min + ' minutes.'
-              }, '');
-              res.json(buildResponse('Train Arrivals', 'Here are the train arrivals', trainArrivals, true));
-            })
-          }).on('error', function(e) {
-            console.log('Error getting train predictions: ' + e.message);
-          });
+          } else {
+            res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station you requested', true));
+          }
         }
       })
     }).on('error', function(e) {
