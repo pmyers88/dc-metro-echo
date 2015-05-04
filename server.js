@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
@@ -35,9 +36,6 @@ buildResponse = function(title, subtitle, content, shouldEndSession) {
 	};
 };
 
-var server = app.listen(3000, function() {
-	var host = server.address().address;
-	var port = server.address().port;
-
-	console.log('App listening at http://%s:%s', host, port);
+var server = app.listen(app.get('port'), function() {
+	console.log('App listening on port', app.get('port'));
 });
