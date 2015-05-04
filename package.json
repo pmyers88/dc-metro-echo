@@ -1,0 +1,19 @@
+{
+  "name": "dc-metro-echo",
+  "version": "1.0.0",
+  "description": "Echo app to tell a user when the next train is arriving at a given metro station.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pmyers88/dc-metro-echo.git"
+  },
+  "author": "Phil Myers, RJ Beers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pmyers88/dc-metro-echo/issues"
+  },
+  "homepage": "https://github.com/pmyers88/dc-metro-echo"
+}
