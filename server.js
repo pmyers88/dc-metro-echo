@@ -20,7 +20,7 @@ app.post('/echo_request/parse', function(req, res) {
 buildResponse = function(title, subtitle, content, shouldEndSession) {
 	return {
 		version: '1.0',
-		reponse: {
+		response: {
 			outputSpeech: {
 				type: 'PlainText',
 				text: content
