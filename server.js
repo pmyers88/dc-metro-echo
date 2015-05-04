@@ -38,6 +38,7 @@ app.post('/echo_request/parse', function(req, res) {
         var intent = req.body.request.intent;
         if (intent.name === 'GetMetroTimes') {
           var stationName = intent.slots.station.value;
+          console.log('Station Name: ' + stationName);
           var stationCode = stationNameHash[stationName].Code;
           http.get(_.assign(wmataOptions, { path: '/StationPrediction.svc/json/GetPrediction/' + stationCode + '?' + apiKey }), function(predictionResp) {
             var predictionBody = '';
@@ -46,11 +47,9 @@ app.post('/echo_request/parse', function(req, res) {
             });
             predictionResp.on('end', function() {
               var trains = JSON.parse(predictionBody).Trains;
-              console.log('Trains: ' + JSON.stringify(trains));
               var trainArrivals = _.reduce(trains, function(sentence, train) {
                 return sentence + 'The next train to ' + train.DestinationName + ' leaves in ' + train.Min + ' minutes.'
               }, '');
-              console.log(trainArrivals);
               res.json(buildResponse('Train Arrivals', 'Here are the train arrivals', trainArrivals, true));
             })
           }).on('error', function(e) {
