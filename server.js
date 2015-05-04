@@ -57,7 +57,7 @@ app.post('/echo_request/parse', function(req, res) {
               console.log('Error getting train predictions: ' + e.message);
             });
           } else {
-            res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station you requested', true));
+            res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station ' + stationName, true));
           }
         }
       })
