@@ -1,15 +1,7 @@
 var express = require('express');
+var router = express.Router();
 var http = require('http');
 var _ = require('lodash');
-var app = express();
-var bodyParser = require('body-parser');
-
-app.set('port', (process.env.PORT || 5000));
-app.use(bodyParser.json());
-
-app.get('/', function(req, res) {
-  res.send('DC Metro App is up and ready to go!');
-});
 
 var wmataOptions = {
   hostname: 'api.wmata.com'
@@ -17,7 +9,7 @@ var wmataOptions = {
 
 var apiKey = 'api_key=' + process.env.WMATA_API_KEY;
 
-app.post('/echo_request/parse', function(req, res) {
+router.post('/', function(req, res) {
   var respJSON = null;
   var reqType = req.body.request.type;
   if (reqType === 'LaunchRequest') {
@@ -89,6 +81,4 @@ var buildResponse = function(title, subtitle, content, shouldEndSession) {
   };
 };
 
-var server = app.listen(app.get('port'), function() {
-  console.log('App listening on port', app.get('port'));
-});
+module.exports = router;
