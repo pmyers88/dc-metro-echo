@@ -28,6 +28,10 @@ var buildResponse = function(title, subtitle, content, shouldEndSession) {
   };
 };
 
+router.get('/', function(req, res) {
+  res.send('Welcome to the DC Metro App api!!!');
+});
+
 router.post('/', function(req, res) {
   var reqType = req.body.request.type;
   if (reqType === 'LaunchRequest') {
@@ -52,7 +56,7 @@ router.post('/', function(req, res) {
       }
     }
   } else if (reqType === 'SessionEndedRequest') {
-    res.json(buildResponse('Thank You', '', 'Thank you for using DC Metro App. Have a nice day.', true);
+    res.json(buildResponse('Thank You', '', 'Thank you for using DC Metro App. Have a nice day.', true));
   } else {
     res.json(buildResponse('Invalid Request Type', 'Invalid Request Type', 'Something went wrong, your request was invalid', true));
   }
