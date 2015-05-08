@@ -1,15 +1,14 @@
 var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
+var app = require('../app').app;
 
 describe('Controllers', function() {
-  var appUrl = 'metro.dev:5000';
-  var apiUrl = 'api.metro.dev:5000';
 
   describe('app', function() {
     describe('GET /', function() {
       it('should return a welcome message', function(done) {
-        request(appUrl)
+        request(app)
           .get('/')
           .expect(200)
           .end(function(err, res) {
@@ -24,8 +23,9 @@ describe('Controllers', function() {
   describe('api', function() {
     describe('GET /v1/echo_request', function() {
       it('should return a welcome message', function(done) {
-        request(apiUrl)
+        request(app)
           .get('/v1/echo_request')
+          .set('Host', 'api.example.com')
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;

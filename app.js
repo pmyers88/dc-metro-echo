@@ -13,3 +13,5 @@ app.set('port', (process.env.PORT || 5000));
 var server = app.listen(app.get('port'), function() {
   console.log('App listening on port', app.get('port'));
 });
+
+module.exports.app = app;
