@@ -45,7 +45,9 @@ router.post('/', function(req, res) {
   } else if (reqType === 'IntentRequest') {
     var intent = req.body.request.intent;
     if (intent.name === 'GetStation') {
-      var stationName = intent.slots.station.value;
+      var stationName = intent.slots.station.value === 'boston' ?
+        'ballston' :
+        intent.slots.station.value;
       console.log('Station Name: ' + stationName);
       if (_.has(stations, stationName)) {
         var stationCode = stations[stationName].Code;
