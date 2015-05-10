@@ -21,11 +21,10 @@ describe('Controllers', function() {
   });
 
   describe('api', function() {
-    describe('GET /v1/echo_request', function() {
+    describe('GET /api/v1/echo_request', function() {
       it('should return a welcome message', function(done) {
         request(app)
-          .get('/v1/echo_request')
-          .set('Host', 'api.example.com')
+          .get('/api/v1/echo_request')
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -34,12 +33,11 @@ describe('Controllers', function() {
           });
       });
     });
-    describe('POST /v1/echo_request', function() {
+    describe('POST /api/v1/echo_request', function() {
       describe('LaunchRequest', function() {
         it('should welcome the user to the app', function(done) {
           request(app)
-            .post('/v1/echo_request')
-            .set('Host', 'api.example.com')
+            .post('/api/v1/echo_request')
             .send({
               version: '1.0',
               session: {
@@ -74,7 +72,7 @@ describe('Controllers', function() {
         describe('GetMetroTimes', function() {
           it('should return metro times', function(done) {
             request(app)
-              .post('/v1/echo_request')
+              .post('/api/v1/echo_request')
               .set('Host', 'api.example.com')
               .send({
                 version: '1.0',
@@ -119,8 +117,7 @@ describe('Controllers', function() {
       describe('SessionEndedRequest', function() {
         it('should end the session', function(done) {
           request(app)
-            .post('/v1/echo_request')
-            .set('Host', 'api.example.com')
+            .post('/api/v1/echo_request')
             .send({
               version: '1.0',
               session: {
