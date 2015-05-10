@@ -1,0 +1,2 @@
+GetStation	when is the next train arriving at {pentagon city|station}
+GetStation	when is the next train arriving at {ballston|station}

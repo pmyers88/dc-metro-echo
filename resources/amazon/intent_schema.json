@@ -1,0 +1,13 @@
+{
+  "intents": [
+    {
+      "intent": "GetStation",
+      "slots": [
+        {
+          "name": "station",
+          "type": "LITERAL"
+        }
+      ]
+    }
+  ]
+}
