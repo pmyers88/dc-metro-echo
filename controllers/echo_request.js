@@ -2,15 +2,17 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var _ = require('lodash');
+
 var stations = require('../resources/stations');
+var utils = require('../helpers/utils');
 
 var wmataReq = request.defaults({
   baseUrl: 'https://api.wmata.com',
   qs: { api_key: process.env.WMATA_API_KEY }
 });
 
-var buildResponse = function(title, subtitle, content, shouldEndSession) {
-  return {
+var buildResponse = function(title, subtitle, content, shouldEndSession, sessionAttributes) {
+  var response = {
     version: '1.0',
     response: {
       outputSpeech: {
@@ -26,6 +28,10 @@ var buildResponse = function(title, subtitle, content, shouldEndSession) {
       shouldEndSession: shouldEndSession
     }
   };
+  if (!utils.isNullOrUndefined(sessionAttributes)) {
+    _.extend(response, { sessionAttributes: sessionAttributes });
+  }
+  return response;
 };
 
 router.get('/', function(req, res) {
@@ -38,22 +44,34 @@ router.post('/', function(req, res) {
     res.json(buildResponse('DC Metro Echo', 'Metro App', 'Welcome to the DC Metro App! How can I help you?', false));
   } else if (reqType === 'IntentRequest') {
     var intent = req.body.request.intent;
-    if (intent.name === 'GetMetroTimes') {
+    if (intent.name === 'GetStation') {
       var stationName = intent.slots.station.value;
       console.log('Station Name: ' + stationName);
       if (_.has(stations, stationName)) {
         var stationCode = stations[stationName].Code;
         wmataReq('/StationPrediction.svc/json/GetPrediction/' + stationCode, function(error, response, body) {
           if (!error && response.statusCode === 200) {
-            var trainArrivals = _.reduce(JSON.parse(body).Trains, function(sentence, train) {
-              return sentence + 'The next train to ' + train.DestinationName + ' leaves in ' + train.Min + ' minutes. ';
-            }, '');
-            res.json(buildResponse('Train Arrivals', 'Here are the train arrivals', trainArrivals, true));
+            var trainArrivals = _.reduce(JSON.parse(body).Trains, function(result, train) {
+              if (train.DestinationName === 'Train') return '';
+              var arrivals = result[train.DestinationName] || [];
+              arrivals.push(train.Min);
+              result[train.DestinationName] = arrivals;
+              return result;
+            }, {});
+            var possibleDestinations = _.keys(trainArrivals);
+            var destinationNeededText = 'Are you going to ' +
+              possibleDestinations.slice(0, possibleDestinations.length - 1).join(', ') +
+              (possibleDestinations.length > 1 ?
+                ' or ' + _.last(possibleDestinations) + '?' :
+                '');
+            res.json(buildResponse('Destination Needed', '', destinationNeededText, false, trainArrivals));
           }
         });
       } else {
         res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station ' + stationName, true));
       }
+    } else {
+      res.json(buildResponse('Invalid Request', '', intent.name + ' is not a valid intent type.', true));
     }
   } else if (reqType === 'SessionEndedRequest') {
     res.json(buildResponse('Thank You', '', 'Thank you for using DC Metro App. Have a nice day.', true));
