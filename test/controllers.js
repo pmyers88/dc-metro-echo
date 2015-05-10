@@ -73,6 +73,51 @@ describe('Controllers', function() {
       describe('IntentRequest', function() {
         describe('GetMetroTimes', function() {
           it('should return metro times', function(done) {
+            request(app)
+              .post('/v1/echo_request')
+              .set('Host', 'api.example.com')
+              .send({
+                version: '1.0',
+                session: {
+                  new: true,
+                  sessionId: 'amznSessionId',
+                  attributes: {},
+                  user: {
+                    userId: 'amznUserId'
+                  }
+                },
+                request: {
+                  type: 'IntentRequest',
+                  requestId: 'amznReqId',
+                  intent: {
+                    name: 'GetMetroTimes',
+                    slots: {
+                      station: {
+                        name: 'station',
+                        value: 'ballston'
+                      }
+                    }
+                  }
+                }
+              })
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                res.body.version.should.equal('1.0');
+                res.body.response.outputSpeech.type.should.equal('PlainText');
+                res.body.response.outputSpeech.text.should.match(/^(The next train to .+ leaves in \d+ minutes\.\s?)+/);
+                res.body.response.card.type.should.equal('Simple');
+                res.body.response.card.title.should.equal('Train Arrivals');
+                res.body.response.card.subtitle.should.equal('Here are the train arrivals');
+                res.body.response.card.content.should.match(/^(The next train to .+ leaves in \d+ minutes\.\s?)/);
+                res.body.response.shouldEndSession.should.equal(true);
+                done();
+              });
+          });
+        });
+      });
+      describe('SessionEndedRequest', function() {
+        it('should end the session', function(done) {
           request(app)
             .post('/v1/echo_request')
             .set('Host', 'api.example.com')
@@ -87,17 +132,9 @@ describe('Controllers', function() {
                 }
               },
               request: {
-                type: 'IntentRequest',
+                type: 'SessionEndedRequest',
                 requestId: 'amznReqId',
-                intent: {
-                  name: 'GetMetroTimes',
-                  slots: {
-                    station: {
-                      name: 'station',
-                      value: 'ballston'
-                    }
-                  }
-                }
+                reason: 'USER_INITIATED'
               }
             })
             .expect(200)
@@ -105,19 +142,15 @@ describe('Controllers', function() {
               if (err) throw err;
               res.body.version.should.equal('1.0');
               res.body.response.outputSpeech.type.should.equal('PlainText');
-              res.body.response.outputSpeech.text.should.match(/^(The next train to [^ ]+ leaves in \d+ minutes.)+/);
+              res.body.response.outputSpeech.text.should.equal('Thank you for using DC Metro App. Have a nice day.');
               res.body.response.card.type.should.equal('Simple');
-              res.body.response.card.title.should.equal('Train Arrivals');
-              res.body.response.card.subtitle.should.equal('Here are the train arrivals');
-              res.body.response.card.content.should.match(/^(The next train to [^ ]+ leaves in \d+ minutes.)+/);
+              res.body.response.card.title.should.equal('Thank You');
+              res.body.response.card.subtitle.should.equal('');
+              res.body.response.card.content.should.equal('Thank you for using DC Metro App. Have a nice day.');
               res.body.response.shouldEndSession.should.equal(true);
               done();
             });
         });
-        });
-      });
-      describe('SessionEndedRequest', function() {
-        it('should end the session');
       });
     });
   });
