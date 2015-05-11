@@ -12,11 +12,16 @@ var fixStationName = function(stationName) {
 };
 
 var joinListConjuction = function(list, separator, conjuction) {
-  return list.slice(0, list.length - 1).join(separator) +
-    (list.length > 1 ?
-      conjuction + _.last(list) :
-      '');
-
+  var joinedList = '';
+  if (list.length === 1) {
+    joinedList = list[0];
+  } else {
+    joinedList = list.slice(0, list.length - 1).join(separator) +
+      (list.length > 1 ?
+        conjuction + _.last(list) :
+        '');
+  }
+  return joinedList;
 };
 
 module.exports = {

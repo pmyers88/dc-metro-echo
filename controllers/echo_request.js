@@ -47,42 +47,52 @@ router.post('/', function(req, res) {
     var sessionAttributes = req.body.sessionAttributes;
     if (intent.name === 'GetStation') {
       var stationName = utils.fixStationName(intent.slots.station.value);
-      console.log('Station Name: ' + stationName);
+      console.info('Station Name: ' + stationName);
       if (_.has(stations, stationName)) {
         var stationCode = stations[stationName].Code;
         wmataReq('/StationPrediction.svc/json/GetPrediction/' + stationCode, function(error, response, body) {
           if (!error && response.statusCode === 200) {
+            console.info('Request Body: ', body);
             var trainArrivals = _.reduce(JSON.parse(body).Trains, function(result, train) {
-              if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return '';
+              if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
               var arrivals = result[train.DestinationName] || [];
               arrivals.push(train.Min);
               result[train.DestinationName] = arrivals;
               return result;
             }, {});
-            var possibleDestinations = _.keys(trainArrivals);
-            var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(possibleDestinations, ', ', ' or ');
-            res.json(buildResponse('Destination Needed', '', destinationNeededText, false, trainArrivals));
+            console.info('Train Arrivals', trainArrivals);
+            if (_.size(trainArrivals) === 0) {
+              res.json(buildResponse('Sorry', 'Sorry', 'Sorry, there are no trains running at this time.', true));
+            } else {
+              var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(_.keys(trainArrivals), ', ', ' or ');
+              res.json(buildResponse('Destination Needed', '', destinationNeededText, false, trainArrivals));
+            }
           }
         });
       } else {
+        console.error('Could not find station name: ' + stationName);
         res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station ' + stationName, true));
       }
     } else if (intent.name === 'GetDestinationStation') {
       var stationName = utils.fixStationName(intent.slots.destinationStation.value);
+      console.info('Station Name: ' + stationName);
       if (_.has(sessionAttributes, stationName)) {
         var arrivalTimes = sessionAttributes[stationName];
         var respText = 'The next ' + (arrivalTimes.length === '1' ?
           'train' : arrivalTimes.length + ' trains') + ' heading to ' + stationName + ' arrive in ' + utils.joinListConjuction(arrivalTimes, ', ', ' and ') + ' minutes.';
         res.json(buildResponse('Arrival Times', 'Here are the arrival times for trains heading to ' + stationName + '.', respText, true));
       } else {
+        console.error('Could not find destination station name: ' + stationName);
         res.json(buildResponse('Destination Station Not Found', '', 'Sorry, I couldn\'t find the destination station ' + stationName + '.', true));
       }
     } else {
+      console.error('Invalid Request: ' + intent.name);
       res.json(buildResponse('Invalid Request', '', intent.name + ' is not a valid intent type.', true));
     }
   } else if (reqType === 'SessionEndedRequest') {
     res.json(buildResponse('Thank You', '', 'Thank you for using DC Metro App. Have a nice day.', true));
   } else {
+    console.error('Unknown Error', req);
     res.json(buildResponse('Invalid Request Type', 'Invalid Request Type', 'Something went wrong, your request was invalid', true));
   }
 });
