@@ -8,6 +8,15 @@
           "type": "LITERAL"
         }
       ]
+    },
+    {
+      "intent": "DestinationStation",
+      "slots": [
+        {
+          "name": "destinationStation",
+          "type": "LITERAL"
+        }
+      ]
     }
   ]
 }
