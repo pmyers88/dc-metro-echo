@@ -10,7 +10,7 @@
       ]
     },
     {
-      "intent": "DestinationStation",
+      "intent": "GetDestinationStation",
       "slots": [
         {
           "name": "destinationStation",
