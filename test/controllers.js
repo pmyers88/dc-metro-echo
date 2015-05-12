@@ -69,11 +69,10 @@ describe('Controllers', function() {
         });
       });
       describe('IntentRequest', function() {
-        describe('GetMetroTimes', function() {
-          it('should return metro times', function(done) {
+        describe('GetStation', function() {
+          it('should ask user for destination', function(done) {
             request(app)
               .post('/api/v1/echo_request')
-              .set('Host', 'api.example.com')
               .send({
                 version: '1.0',
                 session: {
@@ -88,7 +87,7 @@ describe('Controllers', function() {
                   type: 'IntentRequest',
                   requestId: 'amznReqId',
                   intent: {
-                    name: 'GetMetroTimes',
+                    name: 'GetStation',
                     slots: {
                       station: {
                         name: 'station',
@@ -103,16 +102,65 @@ describe('Controllers', function() {
                 if (err) throw err;
                 res.body.version.should.equal('1.0');
                 res.body.response.outputSpeech.type.should.equal('PlainText');
-                res.body.response.outputSpeech.text.should.match(/^(The next train to .+ leaves in \d+ minutes\.\s?)+/);
+                res.body.response.outputSpeech.text.should.startWith('Are you going to');
                 res.body.response.card.type.should.equal('Simple');
-                res.body.response.card.title.should.equal('Train Arrivals');
-                res.body.response.card.subtitle.should.equal('Here are the train arrivals');
-                res.body.response.card.content.should.match(/^(The next train to .+ leaves in \d+ minutes\.\s?)/);
+                res.body.response.card.title.should.equal('Destination Needed');
+                res.body.response.card.subtitle.should.equal('');
+                res.body.response.card.content.should.startWith('Are you going to');
+                res.body.response.shouldEndSession.should.equal(false);
+                done();
+              });
+          });
+        });
+        describe('GetDestinationStation', function() {
+          it('should provide user with arrival times for destination station', function(done) {
+            request(app)
+              .post('/api/v1/echo_request')
+              .send({
+                version: '1.0',
+                session: {
+                  new: true,
+                  sessionId: 'amznSessionId',
+                  attributes: {
+                    'new carrollton': [
+                      '5',
+                      '13'
+                    ]
+                  },
+                  user: {
+                    userId: 'amznUserId'
+                  }
+                },
+                request: {
+                  type: 'IntentRequest',
+                  requestId: 'amznReqId',
+                  intent: {
+                    name: 'GetDestinationStation',
+                    slots: {
+                      destinationStation: {
+                        name: 'destinationStation',
+                        value: 'new carrollton'
+                      }
+                    }
+                  }
+                }
+              })
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                res.body.version.should.equal('1.0');
+                res.body.response.outputSpeech.type.should.equal('PlainText');
+                res.body.response.outputSpeech.text.should.equal('The next 2 trains heading to new carrollton arrive in 5 and 13 minutes.');
+                res.body.response.card.type.should.equal('Simple');
+                res.body.response.card.title.should.equal('Arrival Times');
+                res.body.response.card.subtitle.should.equal('Here are the arrival times for trains heading to new carrollton.');
+                res.body.response.card.content.should.equal('The next 2 trains heading to new carrollton arrive in 5 and 13 minutes.');
                 res.body.response.shouldEndSession.should.equal(true);
                 done();
               });
           });
         });
+
       });
       describe('SessionEndedRequest', function() {
         it('should end the session', function(done) {
