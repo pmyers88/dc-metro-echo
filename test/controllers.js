@@ -121,7 +121,12 @@ describe('Controllers', function() {
                 session: {
                   new: true,
                   sessionId: 'amznSessionId',
-                  attributes: {},
+                  attributes: {
+                    'new carrollton': [
+                      '5',
+                      '13'
+                    ]
+                  },
                   user: {
                     userId: 'amznUserId'
                   }
@@ -134,16 +139,10 @@ describe('Controllers', function() {
                     slots: {
                       destinationStation: {
                         name: 'destinationStation',
-                        value: 'New Carrollton'
+                        value: 'new carrollton'
                       }
                     }
                   }
-                },
-                sessionAttributes: {
-                  'New Carrollton': [
-                    '5',
-                    '13'
-                  ]
                 }
               })
               .expect(200)
@@ -151,11 +150,11 @@ describe('Controllers', function() {
                 if (err) throw err;
                 res.body.version.should.equal('1.0');
                 res.body.response.outputSpeech.type.should.equal('PlainText');
-                res.body.response.outputSpeech.text.should.equal('The next 2 trains heading to New Carrollton arrive in 5 and 13 minutes.');
+                res.body.response.outputSpeech.text.should.equal('The next 2 trains heading to new carrollton arrive in 5 and 13 minutes.');
                 res.body.response.card.type.should.equal('Simple');
                 res.body.response.card.title.should.equal('Arrival Times');
-                res.body.response.card.subtitle.should.equal('Here are the arrival times for trains heading to New Carrollton.');
-                res.body.response.card.content.should.equal('The next 2 trains heading to New Carrollton arrive in 5 and 13 minutes.');
+                res.body.response.card.subtitle.should.equal('Here are the arrival times for trains heading to new carrollton.');
+                res.body.response.card.content.should.equal('The next 2 trains heading to new carrollton arrive in 5 and 13 minutes.');
                 res.body.response.shouldEndSession.should.equal(true);
                 done();
               });

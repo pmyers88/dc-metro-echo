@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
     res.json(buildResponse('DC Metro Echo', 'Metro App', 'Welcome to the DC Metro App! How can I help you?', false));
   } else if (reqType === 'IntentRequest') {
     var intent = req.body.request.intent;
-    var sessionAttributes = req.body.sessionAttributes;
+    var sessionAttributes = req.body.session.attributes;
     if (intent.name === 'GetStation') {
       var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
       console.info('Station Name: ' + stationName);
