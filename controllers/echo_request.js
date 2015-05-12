@@ -79,7 +79,8 @@ router.post('/', function(req, res) {
       if (_.has(sessionAttributes, stationName)) {
         var arrivalTimes = sessionAttributes[stationName];
         var respText = 'The next ' + (arrivalTimes.length === 1 ?
-          'train' : arrivalTimes.length + ' trains') + ' heading to ' + stationName + ' arrive in ' + utils.joinListConjuction(arrivalTimes, ', ', ' and ') + ' minutes.';
+          'train' : arrivalTimes.length + ' trains') + ' heading to ' + stationName +
+          (arrivalTimes.length === 1 ? ' arrives' : 'arrive') + ' in ' + utils.joinListConjuction(arrivalTimes, ', ', ' and ') + ' minutes.';
         res.json(buildResponse('Arrival Times', 'Here are the arrival times for trains heading to ' + stationName + '.', respText, true));
       } else {
         console.error('Could not find destination station name: ' + stationName);
