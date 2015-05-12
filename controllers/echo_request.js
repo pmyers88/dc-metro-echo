@@ -57,8 +57,7 @@ router.post('/', function(req, res) {
               if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
               var arrivals = result[train.DestinationName] || [];
               arrivals.push(train.Min);
-              utils.changeStationName(train.DestinationName, 'abbreviation')
-              result[utils.changeStationName(train.DestinationName, 'abbreviation')] = arrivals;
+              result[utils.changeStationName(train.DestinationName, 'abbreviation').toLowerCase()] = arrivals;
               return result;
             }, {});
             console.info('Train Arrivals', trainArrivals);
