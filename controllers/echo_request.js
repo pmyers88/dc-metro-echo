@@ -39,6 +39,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+  console.info('Request Body: ', req.body);
   var reqType = req.body.request.type;
   if (reqType === 'LaunchRequest') {
     res.json(buildResponse('DC Metro Echo', 'Metro App', 'Welcome to the DC Metro App! How can I help you?', false));
@@ -52,7 +53,6 @@ router.post('/', function(req, res) {
         var stationCode = stations[stationName].Code;
         wmataReq('/StationPrediction.svc/json/GetPrediction/' + stationCode, function(error, response, body) {
           if (!error && response.statusCode === 200) {
-            console.info('Request Body: ', body);
             var trainArrivals = _.reduce(JSON.parse(body).Trains, function(result, train) {
               if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
               var arrivals = result[train.DestinationName] || [];
