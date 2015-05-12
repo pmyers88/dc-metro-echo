@@ -46,7 +46,7 @@ router.post('/', function(req, res) {
     var intent = req.body.request.intent;
     var sessionAttributes = req.body.sessionAttributes;
     if (intent.name === 'GetStation') {
-      var stationName = utils.fixStationName(intent.slots.station.value);
+      var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
       console.info('Station Name: ' + stationName);
       if (_.has(stations, stationName)) {
         var stationCode = stations[stationName].Code;
@@ -57,7 +57,8 @@ router.post('/', function(req, res) {
               if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
               var arrivals = result[train.DestinationName] || [];
               arrivals.push(train.Min);
-              result[train.DestinationName] = arrivals;
+              utils.changeStationName(train.DestinationName, 'abbreviation')
+              result[utils.changeStationName(train.DestinationName, 'abbreviation')] = arrivals;
               return result;
             }, {});
             console.info('Train Arrivals', trainArrivals);
@@ -74,7 +75,7 @@ router.post('/', function(req, res) {
         res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station ' + stationName, true));
       }
     } else if (intent.name === 'GetDestinationStation') {
-      var stationName = utils.fixStationName(intent.slots.destinationStation.value);
+      var stationName = intent.slots.destinationStation.value;
       console.info('Station Name: ' + stationName);
       if (_.has(sessionAttributes, stationName)) {
         var arrivalTimes = sessionAttributes[stationName];

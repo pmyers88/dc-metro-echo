@@ -1,13 +1,20 @@
 var _ = require('lodash');
-var stationCorrections = require('../resources/station_corrections');
+var correction = require('../resources/station_corrections');
+var abbreviation = require('../resources/station_abbreviations');
+
+var changeTypeLookup = {
+  correction: correction,
+  abbreviation: abbreviation
+};
 
 var isNullOrUndefined = function(val) {
   return _.isNull(val) || _.isUndefined(val);
 };
 
-var fixStationName = function(stationName) {
-  return _.has(stationCorrections, stationName) ?
-    stationCorrections[stationName] :
+var changeStationName = function(stationName, changeType) {
+  var mapping = changeTypeLookup[changeType];
+  return _.has(mapping, stationName) ?
+    mapping[stationName] :
     stationName;
 };
 
@@ -26,6 +33,6 @@ var joinListConjuction = function(list, separator, conjuction) {
 
 module.exports = {
   isNullOrUndefined: isNullOrUndefined,
-  fixStationName: fixStationName,
+  changeStationName: changeStationName,
   joinListConjuction: joinListConjuction
 };
