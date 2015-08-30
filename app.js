@@ -10,7 +10,7 @@ var controllers = require('./controllers');
 var app = express();
 var logDirectory = path.join(__dirname, '/log');
 
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+var syncDir = fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
 var accessLogStream = fileStreamRotator.getStream({
   filename: logDirectory + '/access-%DATE%.log',

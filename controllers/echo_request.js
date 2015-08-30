@@ -74,17 +74,17 @@ router.post('/', function(req, res) {
         res.json(buildResponse('Sorry', 'Sorry', 'Sorry, I couldn\'t find the station ' + stationName, true));
       }
     } else if (intent.name === 'GetDestinationStation') {
-      var stationName = intent.slots.destinationStation.value;
-      console.info('Station Name: ' + stationName);
-      if (_.has(sessionAttributes, stationName)) {
-        var arrivalTimes = sessionAttributes[stationName];
+      var destinationStationName = intent.slots.destinationStation.value;
+      console.info('Station Name: ' + destinationStationName);
+      if (_.has(sessionAttributes, destinationStationName)) {
+        var arrivalTimes = sessionAttributes[destinationStationName];
         var respText = 'The next ' + (arrivalTimes.length === 1 ?
-          'train' : arrivalTimes.length + ' trains') + ' heading to ' + stationName +
+          'train' : arrivalTimes.length + ' trains') + ' heading to ' + destinationStationName +
           (arrivalTimes.length === 1 ? ' arrives' : ' arrive') + ' in ' + utils.joinListConjuction(arrivalTimes, ', ', ' and ') + ' minutes.';
-        res.json(buildResponse('Arrival Times', 'Here are the arrival times for trains heading to ' + stationName + '.', respText, true));
+        res.json(buildResponse('Arrival Times', 'Here are the arrival times for trains heading to ' + destinationStationName + '.', respText, true));
       } else {
-        console.error('Could not find destination station name: ' + stationName);
-        res.json(buildResponse('Destination Station Not Found', '', 'Sorry, I couldn\'t find the destination station ' + stationName + '.', true));
+        console.error('Could not find destination station name: ' + destinationStationName);
+        res.json(buildResponse('Destination Station Not Found', '', 'Sorry, I couldn\'t find the destination station ' + destinationStationName + '.', true));
       }
     } else {
       console.error('Invalid Request: ' + intent.name);
