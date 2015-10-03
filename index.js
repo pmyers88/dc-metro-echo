@@ -99,22 +99,17 @@ MetroTransit.prototype.intentHandlers = {
   }
 
   GetServiceAdvisories = function(intent, session, response) {
-    wmataReq('/Incidents.svc/json/Incidents', function (error, wmataResponse, body) {
-      if (!error && wmataResponse.statusCode === 200) {
-        var incidents = JSON.parse(body).Incidents;
-        if (!incidents) {
-          console.error('GetServiceAdvisories: Error parsing incidents from WMATA.');
-          response.tell('Hmm... I am having trouble getting the information. Try again in a few minutes.');
-          return;
-        }
-        var incidentList = _.reduce(incidents, function (descriptions, incident) {
-          return incident.Description ? descriptions.push(incident.Description) : descriptions;
-        }, []);
-        response.tell(incidentList.join('\n'));
-      } else {
-        console.error('GetServiceAdvisories: Bad request', error);
-        response.tell('Sorry, an error has occured. Please try again.');
+    getWmataResponse('/Incidents.svc/json/Incidents', response, function(body) {
+      var incidents = body.Incidents;
+      if (!incidents) {
+        console.error('GetServiceAdvisories: Error parsing incidents from WMATA.');
+        response.tell('Hmm... I am having trouble getting the information. Try again in a few minutes.');
+        return;
       }
+      var incidentList = _.reduce(incidents, function (descriptions, incident) {
+        return incident.Description ? descriptions.push(incident.Description) : descriptions;
+      }, []);
+      response.tell(incidentList.join('\n'));
     });
   };
 };
