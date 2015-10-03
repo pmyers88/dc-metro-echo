@@ -13,6 +13,16 @@ var wmataReq = request.defaults({
   qs: secrets.apiKey
 });
 
+var getWmataResponse = function(endpoint, response, callback) {
+  wmataReq(endpoint, function(error, res, body) {
+    if (!error && res.statusCode === 200) {
+      callback(JSON.parse(body));
+    } else {
+      response.tell('There was an error making the WMATA request, please try again later.');
+    }
+  });
+};
+
 var MetroTransit = function () {
   AlexaSkill.call(this, APP_ID);
 };
@@ -44,24 +54,26 @@ MetroTransit.prototype.intentHandlers = {
   GetStation: function (intent, session, response) {
     var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
     console.info('Station Name: ' + stationName);
+
     if (_.has(stations, stationName)) {
       var stationCode = stations[stationName].Code;
-      wmataReq('/StationPrediction.svc/json/GetPrediction/' + stationCode, function(error, res, body) {
-        if (!error && res.statusCode === 200) {
-          var trainArrivals = _.reduce(JSON.parse(body).Trains, function(result, train) {
-            if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
-            var arrivals = result[train.DestinationName] || [];
-            arrivals.push(train.Min);
-            result[utils.changeStationName(train.DestinationName, 'abbreviation').toLowerCase()] = arrivals;
-            return result;
-          }, {});
-          console.info('Train Arrivals', trainArrivals);
-          if (_.size(trainArrivals) === 0) {
-            res.json(buildResponse('Sorry', 'Sorry', 'Sorry, there are no trains running at this time.', true));
-          } else {
-            var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(_.keys(trainArrivals), ', ', ' or ');
-            response.ask(destinationNeededText, destinationNeededText);
-          }
+
+      getWmataResponse('/StationPrediction.svc/json/GetPrediction/' + stationCode, response, function(body) {
+        var trainArrivals = _.reduce(body.Trains, function(result, train) {
+          if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
+
+          var arrivals = result[train.DestinationName] || [];
+          arrivals.push(train.Min);
+          result[utils.changeStationName(train.DestinationName, 'abbreviation').toLowerCase()] = arrivals;
+          return result;
+        }, {});
+
+        console.info('Train Arrivals', trainArrivals);
+        if (_.size(trainArrivals) === 0) {
+          response.tell('Sorry, there are no trains running at this time.');
+        } else {
+          var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(_.keys(trainArrivals), ', ', ' or ');
+          response.ask(destinationNeededText, destinationNeededText);
         }
       });
     }
@@ -71,6 +83,7 @@ MetroTransit.prototype.intentHandlers = {
     var sessionAttributes = session.attributes;
     var destinationStationName = intent.slots.destinationStation.value;
     console.info('Station Name: ' + destinationStationName);
+
     if (_.has(sessionAttributes, destinationStationName)) {
       var arrivalTimes = sessionAttributes[destinationStationName];
       var respText = 'The next ' + (arrivalTimes.length === 1 ?
