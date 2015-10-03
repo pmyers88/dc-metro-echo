@@ -18,7 +18,8 @@ var getWmataResponse = function(endpoint, response, callback) {
     if (!error && res.statusCode === 200) {
       callback(JSON.parse(body));
     } else {
-      response.tell('There was an error making the WMATA request, please try again later.');
+      console.error(endpoint.concat(': Error with WMATA'), error);
+      response.tell('There was an error making the WMATA request. Please try again later.');
     }
   });
 };
