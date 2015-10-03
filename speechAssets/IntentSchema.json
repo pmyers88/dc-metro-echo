@@ -17,6 +17,10 @@
           "type": "LITERAL"
         }
       ]
+    },
+    {
+      "intent": "GetServiceAdvisories",
+      "slots": []
     }
   ]
 }
