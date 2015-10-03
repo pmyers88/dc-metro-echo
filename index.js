@@ -9,7 +9,7 @@ var APP_ID = secrets.applicationId;
 var AlexaSkill = require('./lib/AlexaSkill');
 
 var wmataReq = request.defaults({
-  baseUrl: 'https://api.wmata.com',
+  baseUrl: utils.properties.wmata_base_url,
   qs: secrets.apiKey
 });
 
@@ -50,6 +50,10 @@ MetroTransit.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequ
 };
 
 MetroTransit.prototype.intentHandlers = {
+
+  GetHelp: function (intent, session, response) {
+    response.tellWithCard(utils.properties.helpSpeechOutput, utils.properties.helpCardTitle, utils.properties.helpCardText);
+  }
 
   GetStation: function (intent, session, response) {
     var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
@@ -104,4 +108,3 @@ exports.handler = function (event, context) {
     var helloWorld = new MetroTransit();
     helloWorld.execute(event, context);
 };
-

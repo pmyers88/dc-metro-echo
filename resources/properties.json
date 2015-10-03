@@ -1,0 +1,6 @@
+{
+  "wmataBaseUrl": "https://api.wmata.com",
+  "helpSpeechOutput": "With DC Metro, you can ask things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\" A card has been added to your Alexa app with this information.",
+  "helpCardTitle": "DC Metro Help",
+  "helpCardText": "Say things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\""
+}

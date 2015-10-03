@@ -1,3 +1,4 @@
+GetHelp help
 GetStation	when is the next train arriving at {pentagon city|station}
 GetStation	when is the next train arriving at {ballston|station}
 GetDestinationStation	{wiehle-reston east|destinationStation}
