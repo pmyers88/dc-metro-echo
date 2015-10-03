@@ -79,7 +79,7 @@ MetroTransit.prototype.intentHandlers = {
     }
   },
 
-  GetDistinationStation: function (intent, session, response) {
+  GetDestinationStation: function (intent, session, response) {
     var sessionAttributes = session.attributes;
     var destinationStationName = intent.slots.destinationStation.value;
     console.info('Station Name: ' + destinationStationName);
