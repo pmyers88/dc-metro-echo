@@ -73,6 +73,7 @@ MetroTransit.prototype.intentHandlers = {
           response.tell('Sorry, there are no trains running at this time.');
         } else {
           var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(_.keys(trainArrivals), ', ', ' or ');
+          session.attributes = trainArrivals;
           response.ask(destinationNeededText, destinationNeededText);
         }
       });
