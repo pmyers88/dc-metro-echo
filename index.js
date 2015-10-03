@@ -1,16 +1,16 @@
 var _ = require('lodash');
 var request = require('request');
 
-var apiKey = require('../secret/api-key');
-var stations = require('../resources/stations');
-var utils = require('../utils/utils');
+var secrets = require('./secret/secrets');
+var stations = require('./resources/stations');
+var utils = require('./lib/utils');
 
-var APP_ID = 'foo'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
+var APP_ID = secrets.applicationId;
 var AlexaSkill = require('./lib/AlexaSkill');
 
 var wmataReq = request.defaults({
   baseUrl: 'https://api.wmata.com',
-  qs: apiKey
+  qs: secrets.apiKey
 });
 
 var MetroTransit = function () {
