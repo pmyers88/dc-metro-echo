@@ -4,12 +4,13 @@ var request = require('request');
 var secrets = require('./secret/secrets');
 var stations = require('./resources/stations');
 var utils = require('./lib/utils');
+var props = require('../resources/properties');
 
 var APP_ID = secrets.applicationId;
 var AlexaSkill = require('./lib/AlexaSkill');
 
 var wmataReq = request.defaults({
-  baseUrl: utils.properties.wmata_base_url,
+  baseUrl: props.wmata_base_url,
   qs: secrets.apiKey
 });
 
@@ -19,7 +20,7 @@ var getWmataResponse = function(endpoint, response, callback) {
       callback(JSON.parse(body));
     } else {
       console.error(endpoint.concat(': Error with WMATA'), error);
-      response.tell('There was an error making the WMATA request. Please try again later.');
+      response.tell(props.wmataErrorSpeechOutput);
     }
   });
 };
@@ -39,9 +40,7 @@ MetroTransit.prototype.eventHandlers.onSessionStarted = function (sessionStarted
 
 MetroTransit.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
   console.log('MetroTransit onLaunch requestId: ' + launchRequest.requestId + ', sessionId: ' + session.sessionId);
-  var speechOutput = 'Welcome to the DC Metro App! How can I help you?';
-  var repromptText = 'How can I help you?';
-  response.ask(speechOutput, repromptText);
+  response.ask(props.lauchSpeechOutput, props.lauchRepromptOutput);
 };
 
 MetroTransit.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
@@ -53,8 +52,8 @@ MetroTransit.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequ
 MetroTransit.prototype.intentHandlers = {
 
   GetHelp: function (intent, session, response) {
-    response.tellWithCard(utils.properties.helpSpeechOutput, utils.properties.helpCardTitle, utils.properties.helpCardText);
-  }
+    response.tellWithCard(props.helpSpeechOutput, props.helpCardTitle, props.helpCardText);
+  },
 
   GetStation: function (intent, session, response) {
     var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
@@ -63,7 +62,7 @@ MetroTransit.prototype.intentHandlers = {
     if (_.has(stations, stationName)) {
       var stationCode = stations[stationName].Code;
 
-      getWmataResponse('/StationPrediction.svc/json/GetPrediction/' + stationCode, response, function(body) {
+      getWmataResponse(props.stationArrivalWmataUrl + stationCode, response, function(body) {
         var trainArrivals = _.reduce(body.Trains, function(result, train) {
           if (train.DestinationName === 'Train' || train.DestinationName == 'No Passenger') return result;
 
@@ -75,7 +74,7 @@ MetroTransit.prototype.intentHandlers = {
 
         console.info('Train Arrivals', trainArrivals);
         if (_.size(trainArrivals) === 0) {
-          response.tell('Sorry, there are no trains running at this time.');
+          response.tell(props.stationNoArrivalsSpeechOutput);
         } else {
           var destinationNeededText = 'Are you going to ' + utils.joinListConjuction(_.keys(trainArrivals), ', ', ' or ');
           session.attributes = trainArrivals;
@@ -97,17 +96,17 @@ MetroTransit.prototype.intentHandlers = {
         (arrivalTimes.length === 1 ? ' arrives' : ' arrive') + ' in ' + utils.joinListConjuction(arrivalTimes, ', ', ' and ') + ' minutes.';
       response.tell(respText);
     } else {
-      console.error('Could not find destination station name: ' + destinationStationName);
-      response.tell('Sorry, I couldn\'t find the destination station ' + destinationStationName + '.');
+      console.error(props.destinationNotFoundConsole + ' ' + destinationStationName);
+      response.tell(props.destinationNotFoundSpeechOutput + ' ' + destinationStationName + '.');
     }
-  }
+  },
 
-  GetServiceAdvisories = function(intent, session, response) {
-    getWmataResponse('/Incidents.svc/json/Incidents', response, function(body) {
+  GetServiceAdvisories: function(intent, session, response) {
+    getWmataResponse(props.serviceAdvisoriesWmataUrl, response, function(body) {
       var incidents = body.Incidents;
       if (!incidents) {
-        console.error('GetServiceAdvisories: Error parsing incidents from WMATA.');
-        response.tell('Hmm... I am having trouble getting the information. Try again in a few minutes.');
+        console.error(props.serviceAdvisoriesErrorConsole);
+        response.tell(props.serviceAdvisoriesErrorSpeechOutput);
         return;
       }
       var incidentList = _.reduce(incidents, function (descriptions, incident) {
@@ -115,7 +114,7 @@ MetroTransit.prototype.intentHandlers = {
       }, []);
       response.tell(incidentList.join('\n'));
     });
-  };
+  }
 };
 
 // Create the handler that responds to the Alexa Request.
