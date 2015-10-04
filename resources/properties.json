@@ -1,6 +1,16 @@
 {
   "wmataBaseUrl": "https://api.wmata.com",
+  "wmataErrorSpeechOutput": "There was an error making the WMATA request. Please try again later.",
+  "lauchSpeechOutput": "Welcome to the DC Metro App! How can I help you?",
+  "lauchRepromptOutput": "How can I help you?",
   "helpSpeechOutput": "With DC Metro, you can ask things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\" A card has been added to your Alexa app with this information.",
   "helpCardTitle": "DC Metro Help",
-  "helpCardText": "Say things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\""
+  "helpCardText": "Say things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\"",
+  "stationArrivalWmataUrl": "/StationPrediction.svc/json/GetPrediction/",
+  "stationNoArrivalsSpeechOutput": "Sorry, there are no trains running at this time.",
+  "destinationNotFoundConsole": "Could not find destination station name:",
+  "destinationNotFoundSpeechOutput": "Sorry, I couldn't find the destination station",
+  "serviceAdvisoriesWmataUrl": "/Incidents.svc/json/Incidents",
+  "serviceAdvisoriesErrorConsole": "GetServiceAdvisories: Error parsing incidents from WMATA.",
+  "serviceAdvisoriesErrorSpeechOutput": "Hmm... I am having trouble getting the information. Try again in a few minutes."
 }
