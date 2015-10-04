@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/pmyers88/dc-metro-echo",
   "dependencies": {
+    "dotenv": "^1.2.0",
     "lodash": "^3.8.0",
     "request": "^2.64.0"
   }

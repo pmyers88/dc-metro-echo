@@ -1,16 +1,16 @@
+require('dotenv').load();
 var _ = require('lodash');
 var request = require('request');
 
-var secrets = require('./secret/secrets');
 var stations = require('./resources/stations');
 var utils = require('./lib/utils');
-
-var APP_ID = secrets.applicationId;
 var AlexaSkill = require('./lib/AlexaSkill');
+
+var APP_ID = process.env.APPLICATION_ID;
 
 var wmataReq = request.defaults({
   baseUrl: utils.properties.wmata_base_url,
-  qs: secrets.apiKey
+  qs :process.env.WMATA_API_KEY
 });
 
 var getWmataResponse = function(endpoint, response, callback) {
@@ -54,7 +54,7 @@ MetroTransit.prototype.intentHandlers = {
 
   GetHelp: function (intent, session, response) {
     response.tellWithCard(utils.properties.helpSpeechOutput, utils.properties.helpCardTitle, utils.properties.helpCardText);
-  }
+  },
 
   GetStation: function (intent, session, response) {
     var stationName = utils.changeStationName(intent.slots.station.value, 'correction');
@@ -100,9 +100,9 @@ MetroTransit.prototype.intentHandlers = {
       console.error('Could not find destination station name: ' + destinationStationName);
       response.tell('Sorry, I couldn\'t find the destination station ' + destinationStationName + '.');
     }
-  }
+  },
 
-  GetServiceAdvisories = function(intent, session, response) {
+  GetServiceAdvisories: function(intent, session, response) {
     getWmataResponse('/Incidents.svc/json/Incidents', response, function(body) {
       var incidents = body.Incidents;
       if (!incidents) {
@@ -115,7 +115,7 @@ MetroTransit.prototype.intentHandlers = {
       }, []);
       response.tell(incidentList.join('\n'));
     });
-  };
+  }
 };
 
 // Create the handler that responds to the Alexa Request.
