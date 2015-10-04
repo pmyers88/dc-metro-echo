@@ -2,3 +2,8 @@ GetStation	when is the next train arriving at {pentagon city|station}
 GetStation	when is the next train arriving at {ballston|station}
 GetDestinationStation	{wiehle-reston east|destinationStation}
 GetDestinationStation	{new carrollton|destinationStation}
+GetServiceAdvisories advisories
+GetServiceAdvisories warnings
+GetServiceAdvisories outages
+GetServiceAdvisories delays
+GetServiceAdvisories alerts

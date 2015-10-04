@@ -18,7 +18,8 @@ var getWmataResponse = function(endpoint, response, callback) {
     if (!error && res.statusCode === 200) {
       callback(JSON.parse(body));
     } else {
-      response.tell('There was an error making the WMATA request, please try again later.');
+      console.error(endpoint.concat(': Error with WMATA'), error);
+      response.tell('There was an error making the WMATA request. Please try again later.');
     }
   });
 };
@@ -96,6 +97,21 @@ MetroTransit.prototype.intentHandlers = {
       response.tell('Sorry, I couldn\'t find the destination station ' + destinationStationName + '.');
     }
   }
+
+  GetServiceAdvisories = function(intent, session, response) {
+    getWmataResponse('/Incidents.svc/json/Incidents', response, function(body) {
+      var incidents = body.Incidents;
+      if (!incidents) {
+        console.error('GetServiceAdvisories: Error parsing incidents from WMATA.');
+        response.tell('Hmm... I am having trouble getting the information. Try again in a few minutes.');
+        return;
+      }
+      var incidentList = _.reduce(incidents, function (descriptions, incident) {
+        return incident.Description ? descriptions.push(incident.Description) : descriptions;
+      }, []);
+      response.tell(incidentList.join('\n'));
+    });
+  };
 };
 
 // Create the handler that responds to the Alexa Request.
@@ -104,4 +120,3 @@ exports.handler = function (event, context) {
     var helloWorld = new MetroTransit();
     helloWorld.execute(event, context);
 };
-
