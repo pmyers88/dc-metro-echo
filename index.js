@@ -4,16 +4,14 @@ var request = require('request');
 
 var stations = require('./resources/stations');
 var utils = require('./lib/utils');
+var props = require('./resources/properties');
 var AlexaSkill = require('./lib/AlexaSkill');
-var props = require('../resources/properties');
-
-var APP_ID = secrets.applicationId;
 
 var APP_ID = process.env.APPLICATION_ID;
 
 var wmataReq = request.defaults({
-  baseUrl: props.wmata_base_url,
-  qs :process.env.WMATA_API_KEY
+  baseUrl: props.wmataBaseUrl,
+  qs: { api_key: process.env.WMATA_API_KEY }
 });
 
 var getWmataResponse = function(endpoint, response, callback) {
@@ -21,7 +19,7 @@ var getWmataResponse = function(endpoint, response, callback) {
     if (!error && res.statusCode === 200) {
       callback(JSON.parse(body));
     } else {
-      console.error(endpoint.concat(': Error with WMATA'), error);
+      console.error(endpoint.concat(': Error with WMATA'), JSON.stringify(error), JSON.stringify(res));
       response.tell(props.wmataErrorSpeechOutput);
     }
   });
@@ -111,9 +109,7 @@ MetroTransit.prototype.intentHandlers = {
         response.tell(props.serviceAdvisoriesErrorSpeechOutput);
         return;
       }
-      var incidentList = _.reduce(incidents, function (descriptions, incident) {
-        return incident.Description ? descriptions.push(incident.Description) : descriptions;
-      }, []);
+      var incidentList = _.pluck(incidents, 'Description');
       response.tell(incidentList.join('\n'));
     });
   }
