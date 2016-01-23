@@ -1,24 +1,26 @@
 {
   "name": "dc-metro-echo",
   "version": "1.0.0",
-  "description": "Echo app to tell a user when the next train is arriving at a given metro station.",
-  "main": "app.js",
+  "description": "Amazon Echo skill for the Washington D.C. Metro",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "./node_modules/mocha/bin/mocha"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:pmyers88/dc-metro-echo.git"
   },
-  "author": "Phil Myers, RJ Beers",
+  "author": "Phil Myers",
+  "contributors": [
+    "RJ Beers"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pmyers88/dc-metro-echo/issues"
   },
   "homepage": "https://github.com/pmyers88/dc-metro-echo",
   "dependencies": {
-    "lodash": "^3.8.0",
+    "lodash": "^4.0.0",
     "request": "^2.64.0"
   }
 }
