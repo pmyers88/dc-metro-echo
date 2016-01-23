@@ -120,6 +120,6 @@ MetroTransit.prototype.intentHandlers = {
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
     // Create an instance of the MetroTransit skill.
-    var helloWorld = new MetroTransit();
-    helloWorld.execute(event, context);
+    var dcMetro = new MetroTransit();
+    dcMetro.execute(event, context);
 };
