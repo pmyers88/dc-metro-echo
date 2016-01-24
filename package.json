@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Amazon Echo skill for the Washington D.C. Metro",
   "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:pmyers88/dc-metro-echo.git"
