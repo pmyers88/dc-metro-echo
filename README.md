@@ -10,6 +10,7 @@ Amazon Echo skill for the Washington D.C. Metro
     - [Which branch?](#which-branch?)
     - [Testing](#testing)
     - [Pull Request](#pull-request)
+    - [Join Us Online](#join-us-online)
 
 ## Getting Started
 
@@ -53,3 +54,7 @@ We don't have any testing strategy right now.
 ### Pull Request
 
 Please reference any issues you are addressing in your PR.
+
+### Join Us Online
+
+[![Join the chat at https://gitter.im/pmyers88/dc-metro-echo](https://badges.gitter.im/pmyers88/dc-metro-echo.svg)](https://gitter.im/pmyers88/dc-metro-echo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
