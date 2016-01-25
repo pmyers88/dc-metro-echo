@@ -1,4 +1,5 @@
 # dc-metro-echo
+
 Amazon Echo skill for the Washington D.C. Metro
 
 - [Getting Started](#getting-started)
@@ -20,7 +21,7 @@ dc-metro-echo is not available publicly in the Echo App Store. In order to use i
 If you would like to see a feature added, please file an issue [here](https://github.com/pmyers88/dc-metro-echo/issues),
  it is on our radar. Add the <span style="background-color:#84b6eb">enhancement</span> label to it.
 
-If you would like to work on implementing a feature you have requested, see the [Contributing](#contributing) section. 
+If you would like to work on implementing a feature you have requested, see the [Contributing](#contributing) section.
 
 ## Contributing
 
