@@ -7,10 +7,13 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 var runSequence = require('run-sequence');
 var tape = require('gulp-tape');
+var faucet = require('faucet');
 
 gulp.task('test', function() {
   return gulp.src('test/*.js')
-    .pipe(tape());
+    .pipe(tape({
+      reporter: faucet()
+    }));
 });
 
 gulp.task('clean', function() {
