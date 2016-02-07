@@ -1,3 +1,4 @@
+require('dotenv').config();
 var MetroTransit = require('./lib/metro-transit');
 
 // Create the handler that responds to the Alexa Request.
