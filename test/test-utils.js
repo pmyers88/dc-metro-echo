@@ -1,5 +1,3 @@
-'use strict';
-
 var test = require('tape');
 var utils = require('../lib/utils');
 
@@ -32,12 +30,12 @@ test('test changeStationName with abbreviations', function (t) {
 test('joinListConjuction test', function (t) {
   t.plan(3);
 
-  let things = [
+  var things = [
     'this',
     'that',
     'other'
   ];
-  let thing = [
+  var thing = [
     'this'
   ];
 
