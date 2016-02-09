@@ -67,6 +67,7 @@ gulp.task('upload', function() {
         warning += 'Check your AWS credentials and permissions.';
         gutil.log(warning);
       }
+      throw new Error(warning);
     }
 
     var current = data.Configuration;
@@ -82,6 +83,7 @@ gulp.task('upload', function() {
           var warning = 'Package upload failed. ';
           warning += 'Check your iam:PassRole permissions.';
           gutil.log(warning);
+          throw new Error(warning);
         }
       });
     });
