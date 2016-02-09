@@ -107,7 +107,7 @@ gulp.task('upload', function () {
   });
 });
 
-gulp.task('default', function (callback) {
+gulp.task('deploy', function (callback) {
   return runSequence(
     ['semistandard'],
     ['test'],
@@ -119,7 +119,7 @@ gulp.task('default', function (callback) {
   );
 });
 
-gulp.task('lintTest', function (callback) {
+gulp.task('default', function (callback) {
   return runSequence(
     ['semistandard'],
     ['test']
