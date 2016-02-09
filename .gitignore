@@ -21,8 +21,8 @@ coverage
 node_modules
 
 # secret stuff
-.env
+/.env
 
 # dist dir
-dist
-*.zip
+/dist
+/*.zip

@@ -80,6 +80,7 @@ gulp.task('upload', function () {
         warning += 'Check your AWS credentials and permissions.';
         gutil.log(warning);
       }
+      throw new Error(err);
     }
 
     var params = {
@@ -88,17 +89,17 @@ gulp.task('upload', function () {
 
     fs.readFile('./dc-metro-echo.zip', function (err, data) {
       if (err) {
-        console.log(JSON.stringify(err));
         var warning = 'Error creating zip.';
         gutil.log(warning);
+        throw new Error(err);
       } else {
         params.ZipFile = data;
         lambda.updateFunctionCode(params, function (err, data) {
           if (err) {
-            console.log(JSON.stringify(err));
             var warning = 'Package upload failed. ';
             warning += 'Check your iam:PassRole permissions.';
             gutil.log(warning);
+            throw new Error(err);
           }
         });
       }
