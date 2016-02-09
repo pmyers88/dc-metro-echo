@@ -67,7 +67,7 @@ gulp.task('upload', function() {
         warning += 'Check your AWS credentials and permissions.';
         gutil.log(warning);
       }
-      throw new Error(warning);
+      throw new Error(err);
     }
 
     var current = data.Configuration;
@@ -79,11 +79,10 @@ gulp.task('upload', function() {
       params.ZipFile = data;
       lambda.updateFunctionCode(params, function(err, data) {
         if (err) {
-          console.log(JSON.stringify(err));
           var warning = 'Package upload failed. ';
           warning += 'Check your iam:PassRole permissions.';
           gutil.log(warning);
-          throw new Error(warning);
+          throw new Error(err);
         }
       });
     });
