@@ -1,6 +1,7 @@
 # dc-metro-echo
 
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
+[![Build Status](https://travis-ci.org/pmyers88/dc-metro-echo.svg?branch=master)](https://travis-ci.org/pmyers88/dc-metro-echo)
 
 Amazon Echo skill for the Washington D.C. Metro
 
