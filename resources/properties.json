@@ -1,5 +1,4 @@
 {
-  "wmataBaseUrl": "https://api.wmata.com",
   "wmataErrorSpeechOutput": "There was an error making the WMATA request. Please try again later.",
   "lauchSpeechOutput": "Welcome to the DC Metro App! How can I help you?",
   "lauchRepromptOutput": "How can I help you?",
