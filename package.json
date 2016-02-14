@@ -41,6 +41,7 @@
     "run-sequence": "^1.1.4",
     "semistandard": "^7.0.5",
     "tape": "^4.4.0",
+    "tape-expect": "^1.2.0",
     "tape-nock": "^1.1.0"
   },
   "semistandard": {
