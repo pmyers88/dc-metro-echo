@@ -1,6 +1,4 @@
 language: node_js
 node_js:
   - "0.10.36"
-before_script:
-  - npm install -g gulp
-script: gulp
+script: npm run test:lockdown
