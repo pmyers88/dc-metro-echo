@@ -1,0 +1,69 @@
+[
+    {
+        "scope": "https://api.wmata.com:443",
+        "method": "GET",
+        "path": "/StationPrediction.svc/json/GetPrediction/A01?api_key=secret",
+        "body": "",
+        "status": 200,
+        "response": {
+            "Trains": [
+                {
+                    "Car": "6",
+                    "Destination": "Shady Gr",
+                    "DestinationCode": "A15",
+                    "DestinationName": "Shady Grove",
+                    "Group": "2",
+                    "Line": "RD",
+                    "LocationCode": "A01",
+                    "LocationName": "Metro Center",
+                    "Min": "1"
+                },
+                {
+                    "Car": "2",
+                    "Destination": "Glenmont",
+                    "DestinationCode": "B11",
+                    "DestinationName": "Glenmont",
+                    "Group": "1",
+                    "Line": "RD",
+                    "LocationCode": "A01",
+                    "LocationName": "Metro Center",
+                    "Min": "6"
+                },
+                {
+                    "Car": "8",
+                    "Destination": "Shady Gr",
+                    "DestinationCode": "A15",
+                    "DestinationName": "Shady Grove",
+                    "Group": "2",
+                    "Line": "RD",
+                    "LocationCode": "A01",
+                    "LocationName": "Metro Center",
+                    "Min": "22"
+                },
+                {
+                    "Car": "6",
+                    "Destination": "Glenmont",
+                    "DestinationCode": "B11",
+                    "DestinationName": "Glenmont",
+                    "Group": "1",
+                    "Line": "RD",
+                    "LocationCode": "A01",
+                    "LocationName": "Metro Center",
+                    "Min": "34"
+                }
+            ]
+        },
+        "headers": {
+            "cache-control": "no-store, must-revalidate, no-cache",
+            "pragma": "no-cache",
+            "content-length": "889",
+            "content-type": "application/json; charset=utf-8",
+            "expires": "Thu, 18 Feb 2016 04:25:54 GMT",
+            "arr-disable-session-affinity": "True",
+            "x-aspnet-version": "4.0.30319",
+            "x-powered-by": "ASP.NET",
+            "date": "Thu, 18 Feb 2016 04:25:54 GMT",
+            "connection": "close"
+        }
+    }
+]

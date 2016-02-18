@@ -4,7 +4,10 @@
   "description": "Amazon Echo skill for the Washington D.C. Metro",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | faucet"
+    "test": "tape test/*.js | faucet",
+    "test:record": "NOCK_BACK_MODE=record npm test",
+    "test:lockdown": "NOCK_BACK_MODE=lockdown npm test",
+    "test:overwrite": "rm test/fixtures/*.json && npm run test:record"
   },
   "repository": {
     "type": "git",
@@ -38,7 +41,9 @@
     "gulp-zip": "^3.0.2",
     "run-sequence": "^1.1.4",
     "semistandard": "^7.0.5",
-    "tape": "^4.4.0"
+    "tape": "^4.4.0",
+    "tape-expect": "^1.2.0",
+    "tape-nock": "^1.1.0"
   },
   "semistandard": {
     "ignore": [
