@@ -1,0 +1,61 @@
+[
+    {
+        "scope": "https://api.wmata.com:443",
+        "method": "GET",
+        "path": "/Incidents.svc/json/Incidents?api_key=secret",
+        "body": "",
+        "status": 200,
+        "response": {
+            "Incidents": [
+                {
+                    "IncidentID": "55479EB7-CAC2-4FA3-9ED7-7AE1BE2E436E",
+                    "Description": "Red Line: Single tracking btwn Friendship Heights & Grosvenor due to a track condition at Grosvenor. Expect delays in both directions.",
+                    "StartLocationFullName": null,
+                    "EndLocationFullName": null,
+                    "PassengerDelay": 0,
+                    "DelaySeverity": null,
+                    "IncidentType": "Delay",
+                    "EmergencyText": null,
+                    "LinesAffected": "RD;",
+                    "DateUpdated": "2016-02-17T23:09:26"
+                },
+                {
+                    "IncidentID": "D746BB7F-9345-4913-BC59-60CFECCDF345",
+                    "Description": "Red Line: Single tracking btwn Shady Grove & Twinbrook due to a track condition outside Shady Grove. Expect delays in both directions.",
+                    "StartLocationFullName": null,
+                    "EndLocationFullName": null,
+                    "PassengerDelay": 0,
+                    "DelaySeverity": null,
+                    "IncidentType": "Delay",
+                    "EmergencyText": null,
+                    "LinesAffected": "RD;",
+                    "DateUpdated": "2016-02-17T23:07:18"
+                },
+                {
+                    "IncidentID": "A5AF5EE2-D604-4D11-A7D9-A3848D3CBEC2",
+                    "Description": "Org/Blu/Sil Line: Single tracking btwn Federal Triangle & Foggy Bottom due to scheduled track work. Expect delays through tonight's closing.",
+                    "StartLocationFullName": null,
+                    "EndLocationFullName": null,
+                    "PassengerDelay": 0,
+                    "DelaySeverity": null,
+                    "IncidentType": "Delay",
+                    "EmergencyText": null,
+                    "LinesAffected": "BL; OR; SV;",
+                    "DateUpdated": "2016-02-17T22:14:23"
+                }
+            ]
+        },
+        "headers": {
+            "cache-control": "no-store, must-revalidate, no-cache",
+            "pragma": "no-cache",
+            "content-length": "1244",
+            "content-type": "application/json; charset=utf-8",
+            "expires": "Thu, 18 Feb 2016 04:25:55 GMT",
+            "arr-disable-session-affinity": "True",
+            "x-aspnet-version": "4.0.30319",
+            "x-powered-by": "ASP.NET",
+            "date": "Thu, 18 Feb 2016 04:25:54 GMT",
+            "connection": "close"
+        }
+    }
+]

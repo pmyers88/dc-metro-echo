@@ -1,4 +1,3 @@
-require('dotenv').config();
 var path = require('path');
 var tape = require('tape-expect');
 var tapeNock = require('tape-nock');
@@ -10,7 +9,7 @@ var test = tapeNock(tape, {
 });
 
 test('wmata api get station prediction valid key', function (t) {
-  var url = props.stationArrivalWmataUrl + 'B02';
+  var url = props.stationArrivalWmataUrl + 'A01?api_key=secret';
   wmataApi.get(url, function (response) {
     t.plan(2);
     t.ok(response);
@@ -21,7 +20,7 @@ test('wmata api get station prediction valid key', function (t) {
 });
 
 test('wmata api get station prediction invalid key', function (t) {
-  var url = props.stationArrivalWmataUrl + 'FooBar';
+  var url = props.stationArrivalWmataUrl + 'FooBar?api_key=secret';
   wmataApi.get(url, null, function (error) {
     t.plan(2);
     t.expect(error.statusCode).to.be(400);
@@ -31,7 +30,7 @@ test('wmata api get station prediction invalid key', function (t) {
 });
 
 test('wmata api get incidents', function (t) {
-  wmataApi.get(props.serviceAdvisoriesWmataUrl, function (response) {
+  wmataApi.get(props.serviceAdvisoriesWmataUrl + '?api_key=secret', function (response) {
     t.plan(2);
     t.ok(response);
     t.expect(response.Incidents[0]).to.have.keys('IncidentID', 'Description', 'StartLocationFullName',

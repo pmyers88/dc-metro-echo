@@ -1,0 +1,24 @@
+[
+    {
+        "scope": "https://api.wmata.com:443",
+        "method": "GET",
+        "path": "/StationPrediction.svc/json/GetPrediction/FooBar?api_key=secret",
+        "body": "",
+        "status": 400,
+        "response": {
+            "Message": "Station Code(s) not specified, invalid, or does not exist."
+        },
+        "headers": {
+            "cache-control": "no-cache",
+            "pragma": "no-cache",
+            "content-length": "72",
+            "content-type": "application/json; charset=utf-8",
+            "expires": "-1",
+            "arr-disable-session-affinity": "True",
+            "x-aspnet-version": "4.0.30319",
+            "x-powered-by": "ASP.NET",
+            "date": "Thu, 18 Feb 2016 04:25:54 GMT",
+            "connection": "close"
+        }
+    }
+]
