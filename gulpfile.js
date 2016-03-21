@@ -10,13 +10,6 @@ var tape = require('gulp-tape');
 var faucet = require('faucet');
 var semistandard = require('gulp-semistandard');
 
-gulp.task('test', function () {
-  return gulp.src('test/*.js')
-    .pipe(tape({
-      reporter: faucet()
-    }));
-});
-
 gulp.task('semistandard', function () {
   return gulp.src(['*.js', 'lib/*.js'])
     .pipe(semistandard())
