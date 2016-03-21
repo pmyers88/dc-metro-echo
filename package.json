@@ -4,6 +4,11 @@
   "description": "Amazon Echo skill for the Washington D.C. Metro",
   "main": "index.js",
   "scripts": {
+    "prebuild": "mkdir -p dist/node_modules",
+    "build": "npm run build:copy && npm run build:install",
+    "postbuild": "rm -f dist/package.json",
+    "build:copy": "cp -R {package.json,index.js,.env,lib,resources,vendor} dist",
+    "build:install": "npm install --production --prefix=dist",
     "clean": "rm -rf dist",
     "semistandard": "semistandard {index.js,lib/**/*.js,test/**/*.js} --verbose | snazzy",
     "test": "tape test/*.js | faucet",

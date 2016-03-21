@@ -10,33 +10,6 @@ var tape = require('gulp-tape');
 var faucet = require('faucet');
 var semistandard = require('gulp-semistandard');
 
-gulp.task('js', function () {
-  return gulp.src(['index.js', '.env'])
-    .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('lib', function () {
-  return gulp.src('./lib/*')
-    .pipe(gulp.dest('./dist/lib/'));
-});
-
-gulp.task('resources', function () {
-  return gulp.src('./resources/*')
-    .pipe(gulp.dest('./dist/resources/'));
-});
-
-gulp.task('vendor', function () {
-  return gulp.src('./vendor/*')
-    .pipe(gulp.dest('./dist/vendor/'));
-});
-
-// Here we want to install npm packages to dist, ignoring devDependencies.
-gulp.task('npm', function () {
-  return gulp.src('./package.json')
-    .pipe(gulp.dest('./dist/'))
-    .pipe(install({production: true}));
-});
-
 // Now the dist directory is ready to go. Zip it.
 gulp.task('zip', function () {
   return gulp.src(['dist/**/*', '!dist/package.json', 'dist/.*'])
