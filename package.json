@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
+    "semistandard": "semistandard {index.js,lib/**/*.js,test/**/*.js} --verbose | snazzy",
     "test": "tape test/*.js | faucet",
     "test:record": "NOCK_BACK_MODE=record npm test",
     "test:lockdown": "NOCK_BACK_MODE=lockdown npm test",
@@ -32,6 +33,7 @@
     "aws-sdk": "^2.2.6",
     "faucet": "0.0.1",
     "semistandard": "^7.0.5",
+    "snazzy": "^3.0.0",
     "tape": "^4.4.0",
     "tape-expect": "^1.2.0",
     "tape-nock": "^1.1.0"

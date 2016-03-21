@@ -10,14 +10,6 @@ var tape = require('gulp-tape');
 var faucet = require('faucet');
 var semistandard = require('gulp-semistandard');
 
-gulp.task('semistandard', function () {
-  return gulp.src(['*.js', 'lib/*.js'])
-    .pipe(semistandard())
-    .pipe(semistandard.reporter('default', {
-      breakOnError: true
-    }));
-});
-
 gulp.task('js', function () {
   return gulp.src(['index.js', '.env'])
     .pipe(gulp.dest('./dist/'));
