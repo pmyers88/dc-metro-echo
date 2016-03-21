@@ -4,6 +4,7 @@
   "description": "Amazon Echo skill for the Washington D.C. Metro",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf ./dist",
     "test": "tape test/*.js | faucet",
     "test:record": "NOCK_BACK_MODE=record npm test",
     "test:lockdown": "NOCK_BACK_MODE=lockdown npm test",

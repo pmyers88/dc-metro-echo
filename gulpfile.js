@@ -18,10 +18,6 @@ gulp.task('semistandard', function () {
     }));
 });
 
-gulp.task('clean', function () {
-  return del('./dist');
-});
-
 gulp.task('js', function () {
   return gulp.src(['index.js', '.env'])
     .pipe(gulp.dest('./dist/'));
