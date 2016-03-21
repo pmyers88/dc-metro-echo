@@ -10,13 +10,6 @@ var tape = require('gulp-tape');
 var faucet = require('faucet');
 var semistandard = require('gulp-semistandard');
 
-// Now the dist directory is ready to go. Zip it.
-gulp.task('zip', function () {
-  return gulp.src(['dist/**/*', '!dist/package.json', 'dist/.*'])
-    .pipe(zip('dc-metro-echo.zip'))
-    .pipe(gulp.dest('./'));
-});
-
 gulp.task('upload', function () {
   AWS.config.region = 'us-east-1';
   var lambda = new AWS.Lambda();
