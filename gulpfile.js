@@ -72,10 +72,3 @@ gulp.task('deploy', function (callback) {
     callback
   );
 });
-
-gulp.task('default', function (callback) {
-  return runSequence(
-    ['semistandard'],
-    ['test']
-  );
-});

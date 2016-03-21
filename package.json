@@ -11,7 +11,8 @@
     "build:install": "npm install --production --prefix=dist",
     "clean": "rm -rf dist",
     "semistandard": "semistandard {index.js,lib/**/*.js,test/**/*.js} --verbose | snazzy",
-    "test": "tape test/*.js | faucet",
+    "tape": "tape test/*.js | faucet",
+    "test": "npm run semistandard && npm run tape",
     "test:record": "NOCK_BACK_MODE=record npm test",
     "test:lockdown": "NOCK_BACK_MODE=lockdown npm test",
     "test:overwrite": "rm test/fixtures/*.json && npm run test:record"
