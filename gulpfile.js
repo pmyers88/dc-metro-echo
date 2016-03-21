@@ -60,15 +60,3 @@ gulp.task('upload', function () {
     });
   });
 });
-
-gulp.task('deploy', function (callback) {
-  return runSequence(
-    ['semistandard'],
-    ['test'],
-    ['clean'],
-    ['js', 'lib', 'vendor', 'resources', 'npm'],
-    ['zip'],
-    ['upload'],
-    callback
-  );
-});
