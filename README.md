@@ -6,6 +6,7 @@
 Amazon Echo skill for the Washington D.C. Metro
 
 - [Getting Started](#getting-started)
+    - [NPM Tasks](#npm-tasks)
 - [Feature Requests](#feature-requests)
 - [Contributing](#Contributing)
     - [Assigning Issues](#assigning-issues)
@@ -19,6 +20,15 @@ Amazon Echo skill for the Washington D.C. Metro
 
 dc-metro-echo is not available publicly in the Echo App Store. In order to use it, you must create an Amazon
  developer account.
+
+### NPM Tasks
+- `test` - Lints JS code and runs the tests
+- `build` - Builds the code locally, preparing for the deploy task to be run
+- `clean` - Erases the results of the `build` task
+- `deploy` - Deploys prebuilt code (assumes the `build` task has been run)
+- `clean-deploy` - Maven style build chain which encompasses `clean`, Deploys from a freshly built copy of the local directory
+
+See the `package.json` for more tasks and details.
 
 ## Feature Requests
 
