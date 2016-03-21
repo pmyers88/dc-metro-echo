@@ -1,16 +1,11 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var del = require('del');
-var install = require('gulp-install');
-var zip = require('gulp-zip');
+#!/usr/bin/env node
+
+'use strict';
+
 var AWS = require('aws-sdk');
 var fs = require('fs');
-var runSequence = require('run-sequence');
-var tape = require('gulp-tape');
-var faucet = require('faucet');
-var semistandard = require('gulp-semistandard');
 
-gulp.task('upload', function () {
+function deployToLambda () {
   AWS.config.region = 'us-east-1';
   var lambda = new AWS.Lambda();
   var functionName = 'MetroTransit';
@@ -21,11 +16,11 @@ gulp.task('upload', function () {
       if (err.statusCode === 404) {
         warning = 'Unable to find lambda function ' + functionName + '. ';
         warning += 'Verify the lambda function name and AWS region are correct.';
-        gutil.log(warning);
+        console.log(warning);
       } else {
         warning = 'AWS API request failed. ';
         warning += 'Check your AWS credentials and permissions.';
-        gutil.log(warning);
+        console.log(warning);
       }
       throw new Error(err);
     }
@@ -37,7 +32,7 @@ gulp.task('upload', function () {
     fs.readFile('./dc-metro-echo.zip', function (err, data) {
       if (err) {
         var warning = 'Error creating zip.';
-        gutil.log(warning);
+        console.log(warning);
         throw new Error(err);
       } else {
         params.ZipFile = data;
@@ -45,11 +40,13 @@ gulp.task('upload', function () {
           if (err) {
             var warning = 'Package upload failed. ';
             warning += 'Check your iam:PassRole permissions.';
-            gutil.log(warning);
+            console.log(warning);
             throw new Error(err);
           }
         });
       }
     });
   });
-});
+}
+
+deployToLambda();
