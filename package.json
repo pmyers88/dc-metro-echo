@@ -12,7 +12,7 @@
     "build:install": "npm install --production --prefix=dist",
     "clean": "rm -rf dist",
     "deploy": "npm run deploy:zip && npm run deploy:upload",
-    "deploy:zip": "zip -r dc-metro-echo.zip dist",
+    "deploy:zip": "cd dist && zip -r ../dc-metro-echo.zip * .env",
     "deploy:upload": "./bin/upload-lambda.js",
     "semistandard": "semistandard {index.js,lib/**/*.js,test/**/*.js,bin/*.js} --verbose | snazzy",
     "tape": "tape test/*.js | faucet",
