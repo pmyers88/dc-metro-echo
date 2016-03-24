@@ -1,6 +1,5 @@
 var test = require('tape');
 var utils = require('../lib/utils');
-var props = require('../resources/properties');
 
 test('test isNullOrUndefined logic', function (t) {
   t.plan(5);
@@ -45,7 +44,7 @@ test('joinListConjuction test', function (t) {
   t.equal(utils.joinListConjuction(thing, ', ', ' and '), 'this');
 });
 
-test('makeGetStationResponseText tests', function (t) {
+test('test makeGetStationResponseText for zero, single or multiple stations', function (t) {
   t.plan(3);
   var multipleStationArrivals = {
     'largo town center': ['4', '8'],
@@ -59,8 +58,8 @@ test('makeGetStationResponseText tests', function (t) {
   var stationName = 'ballston';
 
   t.equal(utils.makeGetStationResponseText(multipleStationArrivals, stationName), 'Are you going to largo town ' +
-    'center, vienna, wiehle reston east or new carrollton');
+    'center, vienna, wiehle reston east or new carrollton?');
   t.equal(utils.makeGetStationResponseText(oneStationArrival, stationName), 'The next train to vienna arrives in 7 ' +
     'minutes. There are no other trains arriving at ballston in the next 20 minutes.');
-  t.equal(utils.makeGetStationResponseText({}, stationName), props.stationNoArrivalsSpeechOutput);
+  t.equal(utils.makeGetStationResponseText({}, stationName), 'Sorry, there are no trains running at this time.');
 });

@@ -4,7 +4,7 @@
   "description": "Amazon Echo skill for the Washington D.C. Metro",
   "main": "index.js",
   "scripts": {
-    "clean-deploy": "npm run clean && npm run test && npm run build && npm run deploy",
+    "clean-deploy": "npm run clean && npm run build && npm run deploy",
     "prebuild": "mkdir -p dist/node_modules",
     "build": "npm run build:copy && npm run build:install",
     "postbuild": "rm -f dist/package.json",
