@@ -24,7 +24,12 @@
     },
     {
       "intent": "GetServiceAdvisories",
-      "slots": []
+      "slots": [
+        {
+          "name": "Advisories",
+          "type": "ADVISORY_WORDS"
+        }
+      ]
     }
   ]
 }
