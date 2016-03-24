@@ -7,8 +7,8 @@
   "helpCardText": "Say things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\"",
   "stationArrivalWmataUrl": "/StationPrediction.svc/json/GetPrediction/",
   "stationNoArrivalsSpeechOutput": "Sorry, there are no trains running at this time.",
-  "destinationNotFoundConsole": "Could not find destination station name:",
-  "destinationNotFoundSpeechOutput": "Sorry, I couldn't find the destination station",
+  "stationNotFoundConsole": "Could not find station name:",
+  "stationNotFoundSpeechOutput": "Sorry, I couldn't find the station",
   "serviceAdvisoriesWmataUrl": "/Incidents.svc/json/Incidents",
   "serviceAdvisoriesErrorConsole": "GetServiceAdvisories: Error parsing incidents from WMATA.",
   "serviceAdvisoriesErrorSpeechOutput": "Hmm... I am having trouble getting the information. Try again in a few minutes."
