@@ -1,8 +1,12 @@
 GetHelp help
-GetStation	when is the next train arriving at {pentagon city|station}
-GetStation	when is the next train arriving at {ballston|station}
-GetDestinationStation	{wiehle-reston east|destinationStation}
-GetDestinationStation	{new carrollton|destinationStation}
-GetServiceAdvisories    {Advisories}
-GetServiceAdvisories    are there any {Advisories}
-GetServiceAdvisories    list {Advisories}
+GetStation  departures at {ballston|station}
+GetStation  departures at {pentagon city|station}
+GetStation  leaving {pentagon city|station}
+GetStation  leaving {ballston|station}
+GetStation  arriving at {pentagon city|station}
+GetStation  arriving at {ballston|station}
+GetDestinationStation {wiehle-reston east|destinationStation}
+GetDestinationStation {new carrollton|destinationStation}
+GetServiceAdvisories  {Advisories}
+GetServiceAdvisories  are there any {Advisories}
+GetServiceAdvisories  list {Advisories}
