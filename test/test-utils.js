@@ -74,3 +74,29 @@ test('test sanitizeServiceAdvisories replaces known abbreviations with words', f
       'Line: Trains operating between Wiehle-Reston & Ballston only due to scheduled track work. Use Orange/Blue ' +
       'Lines to/from other stations.');
 });
+
+test('test findStationByName for stations that exist and don\'t exist', function (t) {
+  t.plan(2);
+
+  var waterfrontStation = {
+    'Code': 'F04',
+    'Name': 'Waterfront',
+    'StationTogether1': '',
+    'StationTogether2': '',
+    'LineCode1': 'GR',
+    'LineCode2': null,
+    'LineCode3': null,
+    'LineCode4': null,
+    'Lat': 38.876221,
+    'Lon': -77.017491,
+    'Address': {
+      'Street': '399 M Street SW',
+      'City': 'Washington',
+      'State': 'DC',
+      'Zip': '20024'
+    }
+  };
+
+  t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
+  t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
+});
