@@ -14,8 +14,8 @@ test('test isNullOrUndefined logic', function (t) {
 test('test changeStationName with corrections', function (t) {
   t.plan(3);
 
-  t.equal(utils.changeStationName('boston', 'correction'), 'ballston');
-  t.equal(utils.changeStationName('ballston', 'correction'), 'ballston');
+  t.equal(utils.changeStationName('boston', 'correction'), 'Ballston-MU');
+  t.equal(utils.changeStationName('ballston', 'correction'), 'Ballston-MU');
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
@@ -76,7 +76,7 @@ test('test sanitizeServiceAdvisories replaces known abbreviations with words', f
 });
 
 test('test findStationByName for stations that exist and don\'t exist', function (t) {
-  t.plan(2);
+  t.plan(3);
 
   var waterfrontStation = {
     'Code': 'F04',
@@ -98,5 +98,6 @@ test('test findStationByName for stations that exist and don\'t exist', function
   };
 
   t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
+  t.deepEqual(utils.findStationByName('waterfront'), waterfrontStation, 'Waterfront station is found by lowercase name');
   t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
