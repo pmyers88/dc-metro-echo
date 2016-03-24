@@ -63,3 +63,14 @@ test('test makeGetStationResponseText for zero, single or multiple stations', fu
     'minutes. There are no other trains arriving at ballston in the next 20 minutes.');
   t.equal(utils.makeGetStationResponseText({}, stationName), 'Sorry, there are no trains running at this time.');
 });
+
+test('test sanitizeServiceAdvisories replaces known abbreviations with words', function (t) {
+  t.plan(1);
+  var serviceAdvisoryText = 'Blu/Org Line: Single tracking btwn Stadium-Armory & Eastern Market due to scheduled ' +
+    'track work. Expect delays through tonight\'s closing. Silver Line: Trains operating btwn Wiehle-Reston & ' +
+    'Ballston only due to scheduled track work. Use Orange/Blue Lines to/from other stations.';
+  t.equal(utils.sanitizeServiceAdvisories(serviceAdvisoryText), 'Blue/Orange Line: Single tracking between ' +
+    'Stadium-Armory & Eastern Market due to scheduled track work. Expect delays through tonight\'s closing. Silver ' +
+      'Line: Trains operating between Wiehle-Reston & Ballston only due to scheduled track work. Use Orange/Blue ' +
+      'Lines to/from other stations.');
+});
