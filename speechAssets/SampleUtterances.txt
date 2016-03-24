@@ -1,6 +1,6 @@
 GetHelp help
-GetStation  departures at {ballston|station}
-GetStation  departures at {pentagon city|station}
+GetStation  departures from {ballston|station}
+GetStation  departures from {pentagon city|station}
 GetStation  leaving {pentagon city|station}
 GetStation  leaving {ballston|station}
 GetStation  arriving at {pentagon city|station}
