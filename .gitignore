@@ -26,3 +26,6 @@ node_modules
 # dist dir
 /dist
 /*.zip
+
+# vim
+.swp
