@@ -14,8 +14,8 @@ test('test isNullOrUndefined logic', function (t) {
 test('test changeStationName with corrections', function (t) {
   t.plan(3);
 
-  t.equal(utils.changeStationName('boston', 'correction'), 'ballston');
-  t.equal(utils.changeStationName('ballston', 'correction'), 'ballston');
+  t.equal(utils.changeStationName('boston', 'correction'), 'Ballston-MU');
+  t.equal(utils.changeStationName('ballston', 'correction'), 'Ballston-MU');
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
@@ -73,4 +73,31 @@ test('test sanitizeServiceAdvisories replaces known abbreviations with words', f
     'Stadium-Armory & Eastern Market due to scheduled track work. Expect delays through tonight\'s closing. Silver ' +
       'Line: Trains operating between Wiehle-Reston & Ballston only due to scheduled track work. Use Orange/Blue ' +
       'Lines to/from other stations.');
+});
+
+test('test findStationByName for stations that exist and don\'t exist', function (t) {
+  t.plan(3);
+
+  var waterfrontStation = {
+    'Code': 'F04',
+    'Name': 'Waterfront',
+    'StationTogether1': '',
+    'StationTogether2': '',
+    'LineCode1': 'GR',
+    'LineCode2': null,
+    'LineCode3': null,
+    'LineCode4': null,
+    'Lat': 38.876221,
+    'Lon': -77.017491,
+    'Address': {
+      'Street': '399 M Street SW',
+      'City': 'Washington',
+      'State': 'DC',
+      'Zip': '20024'
+    }
+  };
+
+  t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
+  t.deepEqual(utils.findStationByName('waterfront'), waterfrontStation, 'Waterfront station is found by lowercase name');
+  t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
