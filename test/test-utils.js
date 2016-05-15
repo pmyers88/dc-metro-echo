@@ -1,16 +1,6 @@
 var test = require('tape');
 var utils = require('../lib/utils');
 
-test('test isNullOrUndefined logic', function (t) {
-  t.plan(5);
-
-  t.ok(utils.isNullOrUndefined(null));
-  t.ok(utils.isNullOrUndefined(undefined));
-  t.notOk(utils.isNullOrUndefined(3));
-  t.notOk(utils.isNullOrUndefined('null'));
-  t.notOk(utils.isNullOrUndefined('undefined'));
-});
-
 test('test changeStationName with corrections', function (t) {
   t.plan(3);
 
