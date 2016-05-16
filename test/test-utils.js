@@ -1,6 +1,6 @@
 var test = require('tape');
 var utils = require('../lib/utils');
-var abbreviations = require('../resources/abbreviations');
+var outputFilters = require('../resources/output_filters');
 
 test('test changeStationName with corrections', function (t) {
   t.plan(3);
@@ -10,7 +10,7 @@ test('test changeStationName with corrections', function (t) {
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
-test('test changeStationName with abbreviations', function (t) {
+test('test changeStationName with outputFilters', function (t) {
   t.plan(3);
 
   t.equal(utils.changeStationName('Achives-Navy Memorial-Penn Quarter', 'abbreviation'), 'Archives');
@@ -71,26 +71,26 @@ test('test makeGetDestinationResponseText for zero, single or multiple stations'
   t.equal(utils.makeGetDestinationResponseText(singleIntArrival, stationName), 'The next train to ballston arrives ' +
     'in 5 minutes.');
   t.equal(utils.makeGetDestinationResponseText(singleBrdSingleIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. There is also a train arriving in 6 minutes.');
+    'boarding now. Also, there is a train arriving in 6 minutes.');
   t.equal(utils.makeGetDestinationResponseText(singleBrdMultIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. There are also trains arriving in 6 and 8 minutes.');
+    'boarding now. Also, there are trains arriving in 6 and 8 minutes.');
   t.equal(utils.makeGetDestinationResponseText(multBrdSingleIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. There is also a train arriving in 6 minutes.');
+    'boarding now. Also, there is a train arriving in 6 minutes.');
   t.equal(utils.makeGetDestinationResponseText(singleBrdArrival, stationName), 'The next train to ballston is ' +
     'boarding now.');
 });
 
-test('test sanitizeServiceAdvisories replaces known abbreviations with words', function (t) {
+test('test replaceAbbreviations replaces known outputFilters with words', function (t) {
   t.plan(2);
   var serviceAdvisoryText = 'Blu/Org Line: Single tracking btwn Stadium-Armory & Eastern Market due to scheduled ' +
     'track work. Expect delays through tonight\'s closing. Silver Line: Trains operating btwn Wiehle-Reston & ' +
     'Ballston only due to scheduled track work. Use Orange/Blue Lines to/from other stations.';
-  t.equal(utils.replaceAbbreviations(serviceAdvisoryText, abbreviations['advisories']), 'Blue/Orange Line: Single tracking between ' +
+  t.equal(utils.replaceAbbreviations(serviceAdvisoryText, outputFilters['advisories']), 'Blue/Orange Line: Single tracking between ' +
     'Stadium-Armory & Eastern Market due to scheduled track work. Expect delays through tonight\'s closing. Silver ' +
       'Line: Trains operating between Wiehle-Reston & Ballston only due to scheduled track work. Use Orange/Blue ' +
       'Lines to/from other stations.');
   var arrivalsText = 'The next train to vienna is BRD now.';
-  t.equal(utils.replaceAbbreviations(arrivalsText, abbreviations['arrivals']), 'The next train to vienna is boarding now.');
+  t.equal(utils.replaceAbbreviations(arrivalsText, outputFilters['arrivals']), 'The next train to vienna is boarding now.');
 });
 
 test('test findStationByName for stations that exist and don\'t exist', function (t) {
