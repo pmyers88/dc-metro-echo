@@ -28,4 +28,4 @@ node_modules
 /*.zip
 
 # vim
-.swp
+*.swp

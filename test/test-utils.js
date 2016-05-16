@@ -2,21 +2,11 @@ var test = require('tape');
 var utils = require('../lib/utils');
 var abbreviations = require('../resources/abbreviations');
 
-test('test isNullOrUndefined logic', function (t) {
-  t.plan(5);
-
-  t.ok(utils.isNullOrUndefined(null));
-  t.ok(utils.isNullOrUndefined(undefined));
-  t.notOk(utils.isNullOrUndefined(3));
-  t.notOk(utils.isNullOrUndefined('null'));
-  t.notOk(utils.isNullOrUndefined('undefined'));
-});
-
 test('test changeStationName with corrections', function (t) {
   t.plan(3);
 
-  t.equal(utils.changeStationName('boston', 'correction'), 'ballston');
-  t.equal(utils.changeStationName('ballston', 'correction'), 'ballston');
+  t.equal(utils.changeStationName('boston', 'correction'), 'Ballston-MU');
+  t.equal(utils.changeStationName('ballston', 'correction'), 'Ballston-MU');
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
@@ -101,4 +91,31 @@ test('test sanitizeServiceAdvisories replaces known abbreviations with words', f
       'Lines to/from other stations.');
   var arrivalsText = 'The next train to vienna is BRD now.';
   t.equal(utils.replaceAbbreviations(arrivalsText, abbreviations['arrivals']), 'The next train to vienna is boarding now.');
+});
+
+test('test findStationByName for stations that exist and don\'t exist', function (t) {
+  t.plan(3);
+
+  var waterfrontStation = {
+    'Code': 'F04',
+    'Name': 'Waterfront',
+    'StationTogether1': '',
+    'StationTogether2': '',
+    'LineCode1': 'GR',
+    'LineCode2': null,
+    'LineCode3': null,
+    'LineCode4': null,
+    'Lat': 38.876221,
+    'Lon': -77.017491,
+    'Address': {
+      'Street': '399 M Street SW',
+      'City': 'Washington',
+      'State': 'DC',
+      'Zip': '20024'
+    }
+  };
+
+  t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
+  t.deepEqual(utils.findStationByName('waterfront'), waterfrontStation, 'Waterfront station is found by lowercase name');
+  t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
