@@ -120,29 +120,11 @@ test('test findStationByName for stations that exist and don\'t exist', function
   t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
 
-test('test findStationByName for stations that exist and don\'t exist', function (t) {
-  t.plan(3);
-
-  var waterfrontStation = {
-    'Code': 'F04',
-    'Name': 'Waterfront',
-    'StationTogether1': '',
-    'StationTogether2': '',
-    'LineCode1': 'GR',
-    'LineCode2': null,
-    'LineCode3': null,
-    'LineCode4': null,
-    'Lat': 38.876221,
-    'Lon': -77.017491,
-    'Address': {
-      'Street': '399 M Street SW',
-      'City': 'Washington',
-      'State': 'DC',
-      'Zip': '20024'
-    }
-  };
-
-  t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
-  t.deepEqual(utils.findStationByName('waterfront'), waterfrontStation, 'Waterfront station is found by lowercase name');
-  t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
+test('test titleize function', function (t) {
+  t.plan(5);
+  t.equal(utils.titleize('silver spring'), 'Silver Spring', 'silver spring -> Silver Spring conversion works');
+  t.equal(utils.titleize('takoma'), 'Takoma', 'takoma-> Takoma conversion works');
+  t.equal(utils.titleize('Gallery Pl-Chinatown'), 'Gallery Pl-Chinatown', 'Gallery Pl-Chinatown string is not changed');
+  t.equal(utils.titleize('NoMa-Gallaudet U'), 'NoMa-Gallaudet U', 'NoMa-Gallaudet U string is not changed');
+  t.equal(utils.titleize('Foggy Bottom-GWU'), 'Foggy Bottom-GWU', 'Foggy Bottom-GWU string is not changed');
 });
