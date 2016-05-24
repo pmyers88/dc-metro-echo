@@ -55,7 +55,7 @@ test('test makeGetStationResponse for zero, single or multiple stations', functi
   t.equal(response.text, 'The next train to Vienna arrives in 7 minutes. There are no other trains arriving at Ballston in the next 20 minutes.');
   t.equal(response.title, 'Arrivals for Ballston');
   response = utils.makeGetStationResponse({}, stationName);
-  t.equal(response.text, 'Sorry, there are no trains running at this time.');
+  t.equal(response.text, 'Sorry, there are no trains arriving at Ballston in the next 20 minutes.');
   t.equal(response.title, 'No Trains Found');
 });
 
