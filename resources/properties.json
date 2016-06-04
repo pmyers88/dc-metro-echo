@@ -1,4 +1,5 @@
 {
+  "abortSpeechOutput": "Thanks for using Capital Transit. Goodbye.",
   "wmataErrorSpeechOutput": "There was an error making the WMATA request. Please try again later.",
   "wmataErrorTitle": "WMATA Request Error",
   "launchSpeechOutput": "Welcome to the Capital Transit Skill! How can I help you?",
