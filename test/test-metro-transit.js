@@ -13,8 +13,8 @@ test('MetroTransit eventHandlers has the right methods', function (t) {
 test('MetroTransit intentHandlers has the right methods', function (t) {
   t.plan(4);
 
-  t.equal(typeof MetroTransit.intentHandlers.GetHelp, 'function', 'onIntent method exists');
-  t.equal(typeof MetroTransit.intentHandlers.GetStation, 'function', 'onLaunch method exists');
-  t.equal(typeof MetroTransit.intentHandlers.GetDestinationStation, 'function', 'onSessionEnded method exists');
-  t.equal(typeof MetroTransit.intentHandlers.GetServiceAdvisories, 'function', 'onSessionStarted method exists');
+  t.equal(typeof MetroTransit.intentHandlers['AMAZON.HelpIntent'], 'function', 'AMAZON.HelpIntent method exists');
+  t.equal(typeof MetroTransit.intentHandlers.GetStation, 'function', 'GetStation method exists');
+  t.equal(typeof MetroTransit.intentHandlers.GetDestinationStation, 'function', 'GetDestinationStation method exists');
+  t.equal(typeof MetroTransit.intentHandlers.GetServiceAdvisories, 'function', 'GetServiceAdvisories method exists');
 });

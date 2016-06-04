@@ -1,4 +1,3 @@
-GetHelp  help
 GetStation  departures from {ballston|station}
 GetStation  departures from {metro center|station}
 GetStation  leaving {metro center|station}
@@ -18,6 +17,9 @@ GetStation  when the next train arrives at {ballston|station}
 GetDestinationStation  {wiehle-reston east|destinationStation}
 GetDestinationStation  {new carrollton|destinationStation}
 GetDestinationStation  {glenmont|destinationStation}
-GetServiceAdvisories  {Advisories}
-GetServiceAdvisories  are there any {Advisories}
-GetServiceAdvisories  list {Advisories}
+GetServiceAdvisories  are there any advisories
+GetServiceAdvisories  are there any service advisories
+GetServiceAdvisories  are there any warnings
+GetServiceAdvisories  are there any delays
+GetServiceAdvisories  are there any outages
+GetServiceAdvisories  are there any alerts

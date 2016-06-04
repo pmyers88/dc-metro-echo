@@ -1,8 +1,7 @@
 {
   "intents": [
     {
-      "intent": "GetHelp",
-      "slots": []
+      "intent": "AMAZON.HelpIntent"
     },
     {
       "intent": "GetStation",
