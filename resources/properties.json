@@ -11,9 +11,10 @@
   "stationNoArrivalsTitle": "No Trains Found",
   "stationNotFoundConsole": "Could not find station name:",
   "stationNotFoundSpeechOutput": "Sorry, I couldn't find the station",
-  "stationNotFoundTitle": "Station Not Found",
+  "stationNotFoundSpeechOutputQuestion": "I may have misheard you. Can you please repeat your question?",
   "stationArrivalsTitle": "Arrivals for ",
   "serviceAdvisoriesWmataUrl": "/Incidents.svc/json/Incidents",
   "noServiceAdvisoriesText": "There are no service alerts at this time.",
-  "noServiceAdvisoriesTitle": "No Service Alerts"
+  "noServiceAdvisoriesTitle": "No Service Alerts",
+  "noStationRequestedSpeechOutput": "I need to know where you're departing from. Try asking \"When does the next train arrive at Metro Center?\""
 }
