@@ -1,10 +1,10 @@
 {
   "wmataErrorSpeechOutput": "There was an error making the WMATA request. Please try again later.",
   "wmataErrorTitle": "WMATA Request Error",
-  "launchSpeechOutput": "Welcome to the Metro Transit App! How can I help you?",
+  "launchSpeechOutput": "Welcome to the Capital Transit Skill! How can I help you?",
   "launchRepromptOutput": "How can I help you?",
-  "helpSpeechOutput": "With DC Metro, you can ask things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\" A card has been added to your Alexa app with this information.",
-  "helpCardTitle": "DC Metro Help",
+  "helpSpeechOutput": "With Capital Transit, you can ask things like, \"When is the next train arriving at Ballston?\" Or, \"Are there any service delays?\" A card has been added to your Alexa app with this information.",
+  "helpCardTitle": "Capital Transit Help",
   "helpCardText": "Say things like \"When is the next train arriving at Ballston?\" or \"Are there any service delays?\"",
   "stationAdvisoriesTitle": "Station Alerts",
   "stationArrivalWmataUrl": "/StationPrediction.svc/json/GetPrediction/",
