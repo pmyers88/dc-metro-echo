@@ -35,8 +35,8 @@ test('joinListConjunction test', function (t) {
   t.equal(utils.joinListConjunction(thing, ', ', ' and '), 'this');
 });
 
-test('test makeGetStationResponseText for zero, single or multiple stations', function (t) {
-  t.plan(3);
+test('test makeGetStationResponse for zero, single or multiple stations', function (t) {
+  t.plan(6);
   var multipleStationArrivals = {
     'largo town center': ['4', '8'],
     'vienna': ['12', '16'],
@@ -48,15 +48,19 @@ test('test makeGetStationResponseText for zero, single or multiple stations', fu
   };
   var stationName = 'ballston';
 
-  t.equal(utils.makeGetStationResponseText(multipleStationArrivals, stationName), 'Are you going to largo town ' +
-    'center, vienna, wiehle reston east or new carrollton?');
-  t.equal(utils.makeGetStationResponseText(oneStationArrival, stationName), 'The next train to vienna arrives in 7 ' +
-    'minutes. There are no other trains arriving at ballston in the next 20 minutes.');
-  t.equal(utils.makeGetStationResponseText({}, stationName), 'Sorry, there are no trains running at this time.');
+  var response = utils.makeGetStationResponse(multipleStationArrivals, stationName);
+  t.equal(response.text, 'Are you traveling in the direction of Largo Town Center, Vienna, Wiehle Reston East or New Carrollton?');
+  t.equal(response.title, '');
+  response = utils.makeGetStationResponse(oneStationArrival, stationName);
+  t.equal(response.text, 'The next train to Vienna arrives in 7 minutes. There are no other trains arriving at Ballston in the next 20 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetStationResponse({}, stationName);
+  t.equal(response.text, 'Sorry, there are no trains arriving at Ballston in the next 20 minutes.');
+  t.equal(response.title, 'No Trains Found');
 });
 
-test('test makeGetDestinationResponseText for zero, single or multiple stations', function (t) {
-  t.plan(6);
+test('test makeGetDestinationResponse for zero, single or multiple stations', function (t) {
+  t.plan(12);
   var multIntArrivals = ['4', '8'];
   var singleIntArrival = ['5'];
   var singleBrdSingleIntArrivals = ['BRD', '6'];
@@ -66,18 +70,24 @@ test('test makeGetDestinationResponseText for zero, single or multiple stations'
 
   var stationName = 'ballston';
 
-  t.equal(utils.makeGetDestinationResponseText(multIntArrivals, stationName), 'The next 2 trains to ballston arrive ' +
-    'in 4 and 8 minutes.');
-  t.equal(utils.makeGetDestinationResponseText(singleIntArrival, stationName), 'The next train to ballston arrives ' +
-    'in 5 minutes.');
-  t.equal(utils.makeGetDestinationResponseText(singleBrdSingleIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. Also, there is a train arriving in 6 minutes.');
-  t.equal(utils.makeGetDestinationResponseText(singleBrdMultIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. Also, there are trains arriving in 6 and 8 minutes.');
-  t.equal(utils.makeGetDestinationResponseText(multBrdSingleIntArrivals, stationName), 'The next train to ballston is ' +
-    'boarding now. Also, there is a train arriving in 6 minutes.');
-  t.equal(utils.makeGetDestinationResponseText(singleBrdArrival, stationName), 'The next train to ballston is ' +
-    'boarding now.');
+  var response = utils.makeGetDestinationResponse(multIntArrivals, stationName);
+  t.equal(response.text, 'The next 2 trains to Ballston arrive in 4 and 8 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetDestinationResponse(singleIntArrival, stationName);
+  t.equal(response.text, 'The next train to Ballston arrives in 5 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetDestinationResponse(singleBrdSingleIntArrivals, stationName);
+  t.equal(response.text, 'The next train to Ballston is boarding now. Also, there is a train arriving in 6 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetDestinationResponse(singleBrdMultIntArrivals, stationName);
+  t.equal(response.text, 'The next train to Ballston is boarding now. Also, there are trains arriving in 6 and 8 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetDestinationResponse(multBrdSingleIntArrivals, stationName);
+  t.equal(response.text, 'The next train to Ballston is boarding now. Also, there is a train arriving in 6 minutes.');
+  t.equal(response.title, 'Arrivals for Ballston');
+  response = utils.makeGetDestinationResponse(singleBrdArrival, stationName);
+  t.equal(response.text, 'The next train to Ballston is boarding now.');
+  t.equal(response.title, 'Arrivals for Ballston');
 });
 
 test('test replaceAbbreviations replaces known outputFilters with words', function (t) {
@@ -120,29 +130,11 @@ test('test findStationByName for stations that exist and don\'t exist', function
   t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
 
-test('test findStationByName for stations that exist and don\'t exist', function (t) {
-  t.plan(3);
-
-  var waterfrontStation = {
-    'Code': 'F04',
-    'Name': 'Waterfront',
-    'StationTogether1': '',
-    'StationTogether2': '',
-    'LineCode1': 'GR',
-    'LineCode2': null,
-    'LineCode3': null,
-    'LineCode4': null,
-    'Lat': 38.876221,
-    'Lon': -77.017491,
-    'Address': {
-      'Street': '399 M Street SW',
-      'City': 'Washington',
-      'State': 'DC',
-      'Zip': '20024'
-    }
-  };
-
-  t.deepEqual(utils.findStationByName('Waterfront'), waterfrontStation, 'Waterfront station is found by name');
-  t.deepEqual(utils.findStationByName('waterfront'), waterfrontStation, 'Waterfront station is found by lowercase name');
-  t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
+test('test titleize function', function (t) {
+  t.plan(5);
+  t.equal(utils.titleize('silver spring'), 'Silver Spring', 'silver spring -> Silver Spring conversion works');
+  t.equal(utils.titleize('takoma'), 'Takoma', 'takoma-> Takoma conversion works');
+  t.equal(utils.titleize('Gallery Pl-Chinatown'), 'Gallery Pl-Chinatown', 'Gallery Pl-Chinatown string is not changed');
+  t.equal(utils.titleize('NoMa-Gallaudet U'), 'NoMa-Gallaudet U', 'NoMa-Gallaudet U string is not changed');
+  t.equal(utils.titleize('Foggy Bottom-GWU'), 'Foggy Bottom-GWU', 'Foggy Bottom-GWU string is not changed');
 });
