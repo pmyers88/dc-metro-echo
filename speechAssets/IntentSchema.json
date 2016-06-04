@@ -4,6 +4,15 @@
       "intent": "AMAZON.HelpIntent"
     },
     {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "GetServiceAdvisories"
+    },
+    {
       "intent": "GetStation",
       "slots": [
         {
@@ -18,15 +27,6 @@
         {
           "name": "destinationStation",
           "type": "LITERAL"
-        }
-      ]
-    },
-    {
-      "intent": "GetServiceAdvisories",
-      "slots": [
-        {
-          "name": "Advisories",
-          "type": "ADVISORY_WORDS"
         }
       ]
     }
