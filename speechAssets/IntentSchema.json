@@ -13,6 +13,15 @@
       "intent": "GetServiceAdvisories"
     },
     {
+      "intent": "SetHomeStation",
+      "slots": [
+        {
+          "name": "homeStation",
+          "type": "LITERAL"
+        }
+      ]
+    },
+    {
       "intent": "GetStation",
       "slots": [
         {
