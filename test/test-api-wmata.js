@@ -1,16 +1,16 @@
-var path = require('path');
-var tape = require('tape-expect');
-var tapeNock = require('tape-nock');
-var wmataApi = require('../lib/api-wmata.js');
-var props = require('../resources/properties.json');
+const path = require('path');
+const tape = require('tape-expect');
+const tapeNock = require('tape-nock');
+const wmataApi = require('../lib/api-wmata.js');
+const props = require('../resources/properties.json');
 
-var test = tapeNock(tape, {
+const test = tapeNock(tape, {
   fixtures: path.join(__dirname, 'fixtures')
 });
 
-test('wmata api get station prediction valid key', function (t) {
-  var url = props.stationArrivalWmataUrl + 'A01?api_key=secret';
-  wmataApi.get(url, function (response) {
+test('wmata api get station prediction valid key', (t) => {
+  const url = props.stationArrivalWmataUrl + 'A01?api_key=secret';
+  wmataApi.get(url, (response) => {
     t.plan(2);
     t.ok(response);
     t.expect(response.Trains[0]).to.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group',
@@ -19,9 +19,9 @@ test('wmata api get station prediction valid key', function (t) {
   });
 });
 
-test('wmata api get station prediction invalid key', function (t) {
-  var url = props.stationArrivalWmataUrl + 'FooBar?api_key=secret';
-  wmataApi.get(url, null, function (error) {
+test('wmata api get station prediction invalid key', (t) => {
+  const url = props.stationArrivalWmataUrl + 'FooBar?api_key=secret';
+  wmataApi.get(url, null, (error) => {
     t.plan(2);
     t.expect(error.statusCode).to.be(400);
     t.expect(JSON.parse(error.body).Message).to.be('Station Code(s) not specified, invalid, or does not exist.');
@@ -29,8 +29,8 @@ test('wmata api get station prediction invalid key', function (t) {
   });
 });
 
-test('wmata api get incidents', function (t) {
-  wmataApi.get(props.serviceAdvisoriesWmataUrl + '?api_key=secret', function (response) {
+test('wmata api get incidents', (t) => {
+  wmataApi.get(props.serviceAdvisoriesWmataUrl + '?api_key=secret', (response) => {
     t.plan(2);
     t.ok(response);
     t.expect(response.Incidents[0]).to.have.keys('IncidentID', 'Description', 'StartLocationFullName',

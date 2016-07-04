@@ -2,44 +2,42 @@
 
 'use strict';
 
-var AWS = require('aws-sdk');
-var fs = require('fs');
+const AWS = require('aws-sdk');
+const fs = require('fs');
 
-function deployToLambda () {
+(function () {
   AWS.config.region = 'us-east-1';
-  var lambda = new AWS.Lambda();
-  var functionName = 'MetroTransit';
+  const lambda = new AWS.Lambda();
+  const functionName = 'MetroTransit';
 
-  lambda.getFunction({FunctionName: functionName}, function (err, data) {
+  lambda.getFunction({FunctionName: functionName}, (err, data) => {
     if (err) {
-      var warning;
+      let warning;
       if (err.statusCode === 404) {
-        warning = 'Unable to find lambda function ' + functionName + '. ';
-        warning += 'Verify the lambda function name and AWS region are correct.';
+        warning = `Unable to find lambda function ${functionName}. ` +
+          `Verify the lambda function name and AWS region are correct.`;
         console.log(warning);
       } else {
-        warning = 'AWS API request failed. ';
-        warning += 'Check your AWS credentials and permissions.';
+        warning = 'AWS API request failed. Check your AWS credentials and permissions.';
         console.log(warning);
       }
       throw new Error(err);
     }
 
-    var params = {
+    const params = {
       FunctionName: functionName
     };
 
-    fs.readFile('./dc-metro-echo.zip', function (err, data) {
+    fs.readFile('./dc-metro-echo.zip', (err, data) => {
       if (err) {
-        var warning = 'Error creating zip.';
+        const warning = 'Error creating zip.';
         console.log(warning);
         throw new Error(err);
       } else {
         params.ZipFile = data;
-        lambda.updateFunctionCode(params, function (err, data) {
+        lambda.updateFunctionCode(params, (err, data) => {
           if (err) {
-            var warning = 'Package upload failed. ';
-            warning += 'Check your iam:PassRole permissions.';
+            const warning = 'Package upload failed. Check your iam:PassRole permissions.';
             console.log(warning);
             throw new Error(err);
           }
@@ -47,6 +45,4 @@ function deployToLambda () {
       }
     });
   });
-}
-
-deployToLambda();
+}());
