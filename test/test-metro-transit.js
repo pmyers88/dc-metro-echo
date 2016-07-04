@@ -11,7 +11,7 @@ test('MetroTransit eventHandlers has the right methods', (t) => {
 });
 
 test('MetroTransit intentHandlers has the right methods', (t) => {
-  t.plan(6);
+  t.plan(7);
 
   t.equal(typeof MetroTransit.intentHandlers['AMAZON.HelpIntent'], 'function', 'AMAZON.HelpIntent method exists');
   t.equal(typeof MetroTransit.intentHandlers['AMAZON.CancelIntent'], 'function', 'AMAZON.CancelIntent method exists');

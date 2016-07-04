@@ -4,7 +4,7 @@
   "wmataErrorTitle": "WMATA Request Error",
   "launchSpeechOutput": "Welcome to the Capital Transit Skill! How can I help you?",
   "launchRepromptOutput": "How can I help you?",
-  "helpSpeechOutput": "Capital Transit can provide information about station arrival times or service delays for the Washington D.C. Metro. You can ask things like, \"When is the next train arriving at Metro Center?\" or, \"Are there any delays?\". So, how can I help?",
+  "helpSpeechOutput": "Capital Transit can provide information about station arrival times or service delays for the Washington D.C. Metro. You can ask things like, \"When is the next train arriving at Metro Center?\" or, \"Are there any delays?\". You can also set a home station by saying \"Set home station to...\" So, how can I help?",
   "helpCardTitle": "Capital Transit Help",
   "helpCardText": "Say things like \"When is the next train arriving at Ballston?\" or \"Are there any service delays?\".",
   "stationAdvisoriesTitle": "Station Alerts",
@@ -18,6 +18,6 @@
   "noServiceAdvisoriesText": "There are no service alerts at this time.",
   "noServiceAdvisoriesTitle": "No Service Alerts",
   "noStationRequestedSpeechOutput": "I need to know where you're departing from. Try asking \"When does the next train arrive at Metro Center?\"",
-  "setHomeStationSpeechOutput": "Welcome to the Capital Transit Skill! Which station would you like to set as your home station?",
-  "setHomeStationRepromptSpeechOutput": "Which station would you like to set as your home station?"
+  "setHomeStationSpeechOutput": "Welcome to the Capital Transit Skill! Which station would you like to set as your home station? Say 'Set my home station to...'",
+  "setHomeStationRepromptSpeechOutput": "Which station would you like to set as your home station? Say 'Set home station to...'"
 }

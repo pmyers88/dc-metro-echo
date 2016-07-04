@@ -14,6 +14,11 @@ GetStation  when is the next train arriving at {metro center|station}
 GetStation  when is the next train arriving at {ballston|station}
 GetStation  when the next train arrives at {metro center|station}
 GetStation  when the next train arrives at {ballston|station}
+GetStationHomeSet  when is the next train arrival
+GetStationHomeSet  when is the next departure
+SetHomeStation  set home station to {wiehle-reston east|homeStation}
+SetHomeStation  set home station to {new carrollton|homeStation}
+SetHomeStation  set home station to {glenmont|homeStation}
 GetDestinationStation  {wiehle-reston east|destinationStation}
 GetDestinationStation  {new carrollton|destinationStation}
 GetDestinationStation  {glenmont|destinationStation}
