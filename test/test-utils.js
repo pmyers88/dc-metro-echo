@@ -1,8 +1,9 @@
-var test = require('tape');
-var utils = require('../lib/utils');
-var outputFilters = require('../resources/output_filters');
+'use strict';
+const test = require('tape');
+const utils = require('../lib/utils');
+const outputFilters = require('../resources/output_filters');
 
-test('test changeStationName with corrections', function (t) {
+test('test changeStationName with corrections', (t) => {
   t.plan(3);
 
   t.equal(utils.changeStationName('boston', 'correction'), 'Ballston-MU');
@@ -10,7 +11,7 @@ test('test changeStationName with corrections', function (t) {
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
-test('test changeStationName with outputFilters', function (t) {
+test('test changeStationName with outputFilters', (t) => {
   t.plan(3);
 
   t.equal(utils.changeStationName('Achives-Navy Memorial-Penn Quarter', 'abbreviation'), 'Archives');
@@ -18,37 +19,42 @@ test('test changeStationName with outputFilters', function (t) {
   t.equal(utils.changeStationName('not listed', 'abbreviation'), 'not listed');
 });
 
-test('joinListConjunction test', function (t) {
-  t.plan(3);
+test('joinListConjunction test', (t) => {
+  t.plan(4);
 
-  var things = [
+  const things = [
     'this',
     'that',
     'other'
   ];
-  var thing = [
+  const twoThings = [
+    'this',
+    'that'
+  ];
+  const thing = [
     'this'
   ];
 
-  t.equal(utils.joinListConjunction(things, ', ', ' or '), 'this, that or other');
-  t.equal(utils.joinListConjunction(things, ', ', ' and '), 'this, that and other');
-  t.equal(utils.joinListConjunction(thing, ', ', ' and '), 'this');
+  t.equal(utils.joinListConjunction(things, ', ', 'or'), 'this, that or other');
+  t.equal(utils.joinListConjunction(things, ', ', 'and'), 'this, that and other');
+  t.equal(utils.joinListConjunction(twoThings, ', ', 'or'), 'this or that');
+  t.equal(utils.joinListConjunction(thing, ', ', 'and'), 'this');
 });
 
-test('test makeGetStationResponse for zero, single or multiple stations', function (t) {
+test('test makeGetStationResponse for zero, single or multiple stations', (t) => {
   t.plan(6);
-  var multipleStationArrivals = {
+  const multipleStationArrivals = {
     'largo town center': ['4', '8'],
     'vienna': ['12', '16'],
     'wiehle reston east': ['9'],
     'new carrollton': ['2']
   };
-  var oneStationArrival = {
+  const oneStationArrival = {
     'vienna': ['7']
   };
-  var stationName = 'ballston';
+  const stationName = 'ballston';
 
-  var response = utils.makeGetStationResponse(multipleStationArrivals, stationName);
+  let response = utils.makeGetStationResponse(multipleStationArrivals, stationName);
   t.equal(response.text, 'Are you traveling in the direction of Largo Town Center, Vienna, Wiehle Reston East or New Carrollton?');
   t.equal(response.title, '');
   response = utils.makeGetStationResponse(oneStationArrival, stationName);
@@ -59,18 +65,18 @@ test('test makeGetStationResponse for zero, single or multiple stations', functi
   t.equal(response.title, 'No Trains Found');
 });
 
-test('test makeGetDestinationResponse for zero, single or multiple stations', function (t) {
+test('test makeGetDestinationResponse for zero, single or multiple stations', (t) => {
   t.plan(12);
-  var multIntArrivals = ['4', '8'];
-  var singleIntArrival = ['5'];
-  var singleBrdSingleIntArrivals = ['BRD', '6'];
-  var singleBrdMultIntArrivals = ['BRD', '6', '8'];
-  var multBrdSingleIntArrivals = ['BRD', 'ARR', '6'];
-  var singleBrdArrival = ['BRD'];
+  const multIntArrivals = ['4', '8'];
+  const singleIntArrival = ['5'];
+  const singleBrdSingleIntArrivals = ['BRD', '6'];
+  const singleBrdMultIntArrivals = ['BRD', '6', '8'];
+  const multBrdSingleIntArrivals = ['BRD', 'ARR', '6'];
+  const singleBrdArrival = ['BRD'];
 
-  var stationName = 'ballston';
+  const stationName = 'ballston';
 
-  var response = utils.makeGetDestinationResponse(multIntArrivals, stationName);
+  let response = utils.makeGetDestinationResponse(multIntArrivals, stationName);
   t.equal(response.text, 'The next 2 trains to Ballston arrive in 4 and 8 minutes.');
   t.equal(response.title, 'Arrivals for Ballston');
   response = utils.makeGetDestinationResponse(singleIntArrival, stationName);
@@ -90,23 +96,23 @@ test('test makeGetDestinationResponse for zero, single or multiple stations', fu
   t.equal(response.title, 'Arrivals for Ballston');
 });
 
-test('test replaceAbbreviations replaces known outputFilters with words', function (t) {
+test('test replaceAbbreviations replaces known outputFilters with words', (t) => {
   t.plan(2);
-  var serviceAdvisoryText = 'Blu/Org Line: Single tracking btwn Stadium-Armory & Eastern Market due to scheduled ' +
+  const serviceAdvisoryText = 'Blu/Org Line: Single tracking btwn Stadium-Armory & Eastern Market due to scheduled ' +
     'track work. Expect delays through tonight\'s closing. Silver Line: Trains operating btwn Wiehle-Reston & ' +
     'Ballston only due to scheduled track work. Use Orange/Blue Lines to/from other stations.';
   t.equal(utils.replaceAbbreviations(serviceAdvisoryText, outputFilters['advisories']), 'Blue/Orange Line: Single tracking between ' +
     'Stadium-Armory & Eastern Market due to scheduled track work. Expect delays through tonight\'s closing. Silver ' +
       'Line: Trains operating between Wiehle-Reston & Ballston only due to scheduled track work. Use Orange/Blue ' +
       'Lines to/from other stations.');
-  var arrivalsText = 'The next train to vienna is BRD now.';
+  const arrivalsText = 'The next train to vienna is BRD now.';
   t.equal(utils.replaceAbbreviations(arrivalsText, outputFilters['arrivals']), 'The next train to vienna is boarding now.');
 });
 
-test('test findStationByName for stations that exist and don\'t exist', function (t) {
+test('test findStationByName for stations that exist and don\'t exist', (t) => {
   t.plan(3);
 
-  var waterfrontStation = {
+  const waterfrontStation = {
     'Code': 'F04',
     'Name': 'Waterfront',
     'StationTogether1': '',
@@ -130,7 +136,7 @@ test('test findStationByName for stations that exist and don\'t exist', function
   t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
 
-test('test titleize function', function (t) {
+test('test titleize function', (t) => {
   t.plan(5);
   t.equal(utils.titleize('silver spring'), 'Silver Spring', 'silver spring -> Silver Spring conversion works');
   t.equal(utils.titleize('takoma'), 'Takoma', 'takoma-> Takoma conversion works');

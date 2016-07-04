@@ -1,7 +1,8 @@
+'use strict';
 require('dotenv').config();
-var MetroTransit = require('./lib/metro-transit');
+const MetroTransit = require('./lib/metro-transit');
 
 // Create the handler that responds to the Alexa Request.
-exports.handler = function (event, context) {
+exports.handler = (event, context) => {
   MetroTransit.execute(event, context);
 };
