@@ -3,7 +3,7 @@ const test = require('tape');
 const utils = require('../lib/utils');
 const outputFilters = require('../resources/output_filters');
 
-test('test changeStationName with corrections', (t) => {
+test('test changeStationName with corrections', t => {
   t.plan(3);
 
   t.equal(utils.changeStationName('boston', 'correction'), 'Ballston-MU');
@@ -11,7 +11,7 @@ test('test changeStationName with corrections', (t) => {
   t.equal(utils.changeStationName('not listed', 'correction'), 'not listed');
 });
 
-test('test changeStationName with outputFilters', (t) => {
+test('test changeStationName with outputFilters', t => {
   t.plan(3);
 
   t.equal(utils.changeStationName('Achives-Navy Memorial-Penn Quarter', 'abbreviation'), 'Archives');
@@ -19,7 +19,7 @@ test('test changeStationName with outputFilters', (t) => {
   t.equal(utils.changeStationName('not listed', 'abbreviation'), 'not listed');
 });
 
-test('joinListConjunction test', (t) => {
+test('joinListConjunction test', t => {
   t.plan(4);
 
   const things = [
@@ -41,7 +41,7 @@ test('joinListConjunction test', (t) => {
   t.equal(utils.joinListConjunction(thing, ', ', 'and'), 'this');
 });
 
-test('test makeGetTrainsResponse for zero, single or multiple stations', (t) => {
+test('test makeGetTrainsResponse for zero, single or multiple stations', t => {
   t.plan(6);
   const multipleStationArrivals = {
     'largo town center': ['4', '8'],
@@ -65,7 +65,7 @@ test('test makeGetTrainsResponse for zero, single or multiple stations', (t) => 
   t.equal(response.title, 'No Trains Found');
 });
 
-test('test makeGetDestinationResponse for zero, single or multiple stations', (t) => {
+test('test makeGetDestinationResponse for zero, single or multiple stations', t => {
   t.plan(12);
   const multIntArrivals = ['4', '8'];
   const singleIntArrival = ['5'];
@@ -96,7 +96,7 @@ test('test makeGetDestinationResponse for zero, single or multiple stations', (t
   t.equal(response.title, 'Arrivals for Ballston');
 });
 
-test('test replaceAbbreviations replaces known outputFilters with words', (t) => {
+test('test replaceAbbreviations replaces known outputFilters with words', t => {
   t.plan(2);
   const serviceAdvisoryText = 'Blu/Org Line: Single tracking btwn Stadium-Armory & Eastern Market due to scheduled ' +
     'track work. Expect delays through tonight\'s closing. Silver Line: Trains operating btwn Wiehle-Reston & ' +
@@ -109,7 +109,7 @@ test('test replaceAbbreviations replaces known outputFilters with words', (t) =>
   t.equal(utils.replaceAbbreviations(arrivalsText, outputFilters['arrivals']), 'The next train to vienna is boarding now.');
 });
 
-test('test findStationByName for stations that exist and don\'t exist', (t) => {
+test('test findStationByName for stations that exist and don\'t exist', t => {
   t.plan(3);
 
   const waterfrontStation = {
@@ -136,7 +136,7 @@ test('test findStationByName for stations that exist and don\'t exist', (t) => {
   t.equal(typeof utils.findStationByName('not a real station name'), 'undefined', 'bad station name returns undefined');
 });
 
-test('test titleize function', (t) => {
+test('test titleize function', t => {
   t.plan(5);
   t.equal(utils.titleize('silver spring'), 'Silver Spring', 'silver spring -> Silver Spring conversion works');
   t.equal(utils.titleize('takoma'), 'Takoma', 'takoma-> Takoma conversion works');

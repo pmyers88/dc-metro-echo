@@ -1,7 +1,7 @@
 const test = require('tape');
 const MetroTransit = require('../lib/metro-transit.js');
 
-test('MetroTransit eventHandlers has the right methods', (t) => {
+test('MetroTransit eventHandlers has the right methods', t => {
   t.plan(4);
 
   t.equal(typeof MetroTransit.eventHandlers.onIntent, 'function', 'onIntent method exists');
@@ -10,7 +10,7 @@ test('MetroTransit eventHandlers has the right methods', (t) => {
   t.equal(typeof MetroTransit.eventHandlers.onSessionStarted, 'function', 'onSessionStarted method exists');
 });
 
-test('MetroTransit intentHandlers has the right methods', (t) => {
+test('MetroTransit intentHandlers has the right methods', t => {
   t.plan(8);
 
   t.equal(typeof MetroTransit.intentHandlers['AMAZON.HelpIntent'], 'function', 'AMAZON.HelpIntent method exists');
