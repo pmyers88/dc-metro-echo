@@ -18,6 +18,6 @@
   "noServiceAdvisoriesText": "There are no service alerts at this time.",
   "noServiceAdvisoriesTitle": "No Service Alerts",
   "noStationRequestedSpeechOutput": "I need to know where you're departing from. Try asking \"When does the next train arrive at Metro Center?\"",
-  "setHomeStationSpeechOutput": "Welcome to the Capital Transit Skill! Which station would you like to set as your home station? Say 'Set my home station to...'",
-  "setHomeStationRepromptSpeechOutput": "Which station would you like to set as your home station? Say 'Set home station to...'"
+  "setHomeStationSpeechOutput": "Welcome to the Capital Transit Skill! Which station would you like to set as your home station? Say 'Set my home station to'",
+  "setHomeStationRepromptSpeechOutput": "Which station would you like to set as your home station? Say 'Set home station to'"
 }

@@ -13,16 +13,7 @@
       "intent": "GetServiceAdvisories"
     },
     {
-      "intent": "SetHomeStation",
-      "slots": [
-        {
-          "name": "homeStation",
-          "type": "LITERAL"
-        }
-      ]
-    },
-    {
-      "intent": "GetStation",
+      "intent": "SetHome",
       "slots": [
         {
           "name": "station",
@@ -31,13 +22,22 @@
       ]
     },
     {
-      "intent": "GetStationHomeSet"
+      "intent": "GetTrainsAt",
+      "slots": [
+        {
+          "name": "station",
+          "type": "LITERAL"
+        }
+      ]
+    },
+    {
+      "intent": "GetTrainsAtHome"
     },
     {
       "intent": "GetDestinationStation",
       "slots": [
         {
-          "name": "destinationStation",
+          "name": "station",
           "type": "LITERAL"
         }
       ]
