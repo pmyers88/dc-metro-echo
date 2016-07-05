@@ -41,7 +41,7 @@ test('joinListConjunction test', (t) => {
   t.equal(utils.joinListConjunction(thing, ', ', 'and'), 'this');
 });
 
-test('test makeGetStationResponse for zero, single or multiple stations', (t) => {
+test('test makeGetTrainsResponse for zero, single or multiple stations', (t) => {
   t.plan(6);
   const multipleStationArrivals = {
     'largo town center': ['4', '8'],
@@ -54,13 +54,13 @@ test('test makeGetStationResponse for zero, single or multiple stations', (t) =>
   };
   const stationName = 'ballston';
 
-  let response = utils.makeGetStationResponse(multipleStationArrivals, stationName);
+  let response = utils.makeGetTrainsResponse(multipleStationArrivals, stationName);
   t.equal(response.text, 'Are you traveling in the direction of Largo Town Center, Vienna, Wiehle Reston East or New Carrollton?');
   t.equal(response.title, '');
-  response = utils.makeGetStationResponse(oneStationArrival, stationName);
+  response = utils.makeGetTrainsResponse(oneStationArrival, stationName);
   t.equal(response.text, 'The next train to Vienna arrives in 7 minutes. There are no other trains arriving at Ballston in the next 20 minutes.');
   t.equal(response.title, 'Arrivals for Ballston');
-  response = utils.makeGetStationResponse({}, stationName);
+  response = utils.makeGetTrainsResponse({}, stationName);
   t.equal(response.text, 'Sorry, there are no trains arriving at Ballston in the next 20 minutes.');
   t.equal(response.title, 'No Trains Found');
 });

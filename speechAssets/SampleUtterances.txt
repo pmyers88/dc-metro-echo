@@ -1,22 +1,28 @@
-GetStation  departures from {ballston|station}
-GetStation  departures from {metro center|station}
-GetStation  leaving {metro center|station}
-GetStation  leaving {ballston|station}
-GetStation  arriving at {metro center|station}
-GetStation  arriving at {ballston|station}
-GetStation  arriving a {metro center|station}
-GetStation  arriving a {ballston|station}
-GetStation  arrives at {metro center|station}
-GetStation  arrives at {ballston|station}
-GetStation  arrives a {metro center|station}
-GetStation  arrives a {ballston|station}
-GetStation  when is the next train arriving at {metro center|station}
-GetStation  when is the next train arriving at {ballston|station}
-GetStation  when the next train arrives at {metro center|station}
-GetStation  when the next train arrives at {ballston|station}
-GetDestinationStation  {wiehle-reston east|destinationStation}
-GetDestinationStation  {new carrollton|destinationStation}
-GetDestinationStation  {glenmont|destinationStation}
+GetTrainsAt  departures from {ballston|station}
+GetTrainsAt  departures from {metro center|station}
+GetTrainsAt  leaving {metro center|station}
+GetTrainsAt  leaving {ballston|station}
+GetTrainsAt  arriving at {metro center|station}
+GetTrainsAt  arriving at {ballston|station}
+GetTrainsAt  arriving a {metro center|station}
+GetTrainsAt  arriving a {ballston|station}
+GetTrainsAt  arrives at {metro center|station}
+GetTrainsAt  arrives at {ballston|station}
+GetTrainsAt  arrives a {metro center|station}
+GetTrainsAt  arrives a {ballston|station}
+GetTrainsAt  when is the next train arriving at {metro center|station}
+GetTrainsAt  when is the next train arriving at {ballston|station}
+GetTrainsAt  when the next train arrives at {metro center|station}
+GetTrainsAt  when the next train arrives at {ballston|station}
+GetTrainsAtHome  when is the next arrival
+GetTrainsAtHome  when is the next departure
+GetTrainsAtHome  when is the next train
+SetHome  set home station to {wiehle-reston east|station}
+SetHome  set home station to {new carrollton|station}
+SetHome  set home station to {glenmont|station}
+GetDestinationStation  {wiehle-reston east|station}
+GetDestinationStation  {new carrollton|station}
+GetDestinationStation  {glenmont|station}
 GetServiceAdvisories  are there any advisories
 GetServiceAdvisories  are there any service advisories
 GetServiceAdvisories  are there any warnings
